@@ -4,6 +4,8 @@ import {
   Container,
   TextField,
   Select,
+  FormControl,
+  InputLabel,
   MenuItem,
   Button,
   Typography,
@@ -14,6 +16,31 @@ import {
   TableBody,
   Paper,
 } from "@mui/material";
+import Box from "@mui/material/Box";
+
+const textFieldStyle = {
+  "& .MuiInputBase-input": {
+    color: "#666",
+    WebkitTextFillColor: "#666",
+  },
+  "& .MuiInputLabel-root": {
+    color: "#00e5ff",
+  },
+  "& .MuiInputLabel-root.Mui-disabled": {
+    color: "#00e5ff",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "#1de9b6",
+    },
+    "&:hover fieldset": {
+      borderColor: "#1de9b6",
+    },
+    "&.Mui-disabled fieldset": {
+      borderColor: "#1de9b6",
+    },
+  },
+};
 
 function Inventory() {
   const { inventory, setInventory, products } = useContext(AppContext);
@@ -38,91 +65,125 @@ function Inventory() {
   };
 
   return (
-    <Container>
-      <Typography variant="h5" gutterBottom>
-        Inventory
-      </Typography>
+    <Box sx={{ py: "60px", background: "#2c5364" }}>
+      <Container maxWidth="md">
+        <Typography variant="h5" gutterBottom sx={{ color: "#fff" }}>
+          Inventory
+        </Typography>
 
-      <Paper sx={{ padding: 2, marginBottom: 3 }}>
-        <Typography variant="h6">Add Inventory</Typography>
-
-        <Select
-          fullWidth
-          margin="normal"
-          name="product"
-          value={form.product}
-          onChange={handleChange}
+        <Paper
+          sx={{
+            padding: 2,
+            marginBottom: 3,
+            backgroundColor: "#030709",
+            color: "#fff",
+          }}
         >
-          {products.map((p, i) => (
-            <MenuItem key={i} value={p.name}>
-              {p.name}
-            </MenuItem>
-          ))}
-        </Select>
+          <Typography variant="h6" sx>
+            Add Inventory
+          </Typography>
 
-        <TextField
-          fullWidth
-          margin="normal"
-          label="Batch Number"
-          name="batch"
-          value={form.batch}
-          onChange={handleChange}
-        />
-        <TextField
-          fullWidth
-          margin="normal"
-          type="date"
-          label="Expiry Date"
-          InputLabelProps={{ shrink: true }}
-          name="expiry"
-          value={form.expiry}
-          onChange={handleChange}
-        />
-        <TextField
-          fullWidth
-          margin="normal"
-          label="Quantity"
-          type="number"
-          name="quantity"
-          value={form.quantity}
-          onChange={handleChange}
-        />
-        <TextField
-          fullWidth
-          margin="normal"
-          label="Storage Location"
-          name="location"
-          value={form.location}
-          onChange={handleChange}
-        />
+          <FormControl fullWidth sx={{ mt: 2, ...textFieldStyle }}>
+            <InputLabel>product</InputLabel>
+            <Select
+              name="product"
+              value={form.product}
+              onChange={handleChange}
+              label="product"
+            >
+              {products.map((p, i) => (
+                <MenuItem key={i} value={p.name}>
+                  {p.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-        <Button variant="contained" onClick={addInventory}>
-          Add Stock
-        </Button>
-      </Paper>
+          <TextField
+            fullWidth
+            margin="normal"
+            label="Batch Number"
+            name="batch"
+            value={form.batch}
+            onChange={handleChange}
+            sx={textFieldStyle}
+          />
+          <TextField
+            fullWidth
+            margin="normal"
+            type="date"
+            label="Expiry Date"
+            InputLabelProps={{ shrink: true }}
+            name="expiry"
+            value={form.expiry}
+            onChange={handleChange}
+            sx={textFieldStyle}
+          />
+          <TextField
+            fullWidth
+            margin="normal"
+            label="Quantity"
+            type="number"
+            name="quantity"
+            value={form.quantity}
+            onChange={handleChange}
+            sx={textFieldStyle}
+          />
+          <TextField
+            fullWidth
+            margin="normal"
+            label="Storage Location"
+            name="location"
+            value={form.location}
+            onChange={handleChange}
+            sx={textFieldStyle}
+          />
 
-      <Typography variant="h6">Inventory List</Typography>
-      <Table component={Paper}>
-        <TableHead>
-          <TableRow>
-            <TableCell>Product</TableCell>
-            <TableCell>Batch</TableCell>
-            <TableCell>Expiry</TableCell>
-            <TableCell>Qty</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {inventory.map((i, index) => (
-            <TableRow key={index}>
-              <TableCell>{i.product}</TableCell>
-              <TableCell>{i.batch}</TableCell>
-              <TableCell>{i.expiry}</TableCell>
-              <TableCell>{i.quantity}</TableCell>
+          <Button
+            variant="contained"
+            onClick={addInventory}
+            sx={{
+              marginTop: 2,
+              fontWeight: 600,
+              color: "#000",
+              background: "linear-gradient(90deg, #00e5ff, #1de9b6)",
+              "&:hover": {
+                background: "linear-gradient(90deg, #1de9b6, #00e5ff)",
+              },
+            }}
+          >
+            Add Stock
+          </Button>
+        </Paper>
+
+        <Typography variant="h6" sx={{ color: "#fff" }}>
+          Inventory List
+        </Typography>
+        <Table
+          component={Paper}
+          sx={{ backgroundColor: "#030709", color: "#fff" }}
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell sx={{ color: "#00e5ff" }}>Product</TableCell>
+              <TableCell sx={{ color: "#00e5ff" }}>Batch</TableCell>
+              <TableCell sx={{ color: "#00e5ff" }}>Expiry</TableCell>
+              <TableCell sx={{ color: "#00e5ff" }}>Qty</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Container>
+          </TableHead>
+          <TableBody>
+            {inventory.map((i, index) => (
+              <TableRow key={index}>
+                <TableCell sx={{ color: "#fff" }}>{i.product}</TableCell>
+                <TableCell sx={{ color: "#fff" }}>{i.batch}</TableCell>
+                <TableCell sx={{ color: "#fff" }}>{i.expiry}</TableCell>
+                <TableCell sx={{ color: "#fff" }}>{i.quantity}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Container>
+    </Box>
   );
 }
 
