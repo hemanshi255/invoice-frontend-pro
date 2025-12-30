@@ -82,9 +82,7 @@ const Inventory = () => {
               color: "#fff",
             }}
           >
-            <Typography variant="h6" sx>
-              Add Inventory
-            </Typography>
+            <Typography variant="h6">Add Inventory</Typography>
 
             <FormControl fullWidth sx={{ mt: 2, ...textFieldStyle }}>
               <InputLabel>product</InputLabel>

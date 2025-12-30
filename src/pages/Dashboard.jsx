@@ -21,6 +21,7 @@ import { AiOutlineProduct } from "react-icons/ai";
 import { IoPersonAddOutline } from "react-icons/io5";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { Paper, Grid } from "@mui/material";
+import Products from "./Products";
 
 const drawerWidth = 240;
 
@@ -203,7 +204,6 @@ const Dashboard = (props) => {
           component="main"
           sx={{
             flexGrow: 1,
-
             width: { sm: `calc(100% - ${drawerWidth}px)` },
           }}
         >
@@ -213,24 +213,60 @@ const Dashboard = (props) => {
               <Grid container spacing={2}>
                 <Grid size={{ xs: 12, sm: 6, md: 6, lg: 3 }}>
                   <Paper sx={cardStyle}>
+                    <Typography>
+                      <AiOutlineProduct
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          fontWeight: 600,
+                        }}
+                      />
+                    </Typography>
                     <Typography variant="h6">Products</Typography>
                     <Typography variant="h4">{products.length}</Typography>
                   </Paper>
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6, md: 6, lg: 3 }}>
                   <Paper sx={cardStyle}>
+                    <Typography>
+                      <MdOutlineInventory
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          fontWeight: 600,
+                        }}
+                      />
+                    </Typography>
                     <Typography variant="h6">Inventory</Typography>
                     <Typography variant="h4">{inventory.length}</Typography>
                   </Paper>
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6, md: 6, lg: 3 }}>
                   <Paper sx={cardStyle}>
+                    <Typography>
+                      <IoPersonAddOutline
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          fontWeight: 600,
+                        }}
+                      />
+                    </Typography>
                     <Typography variant="h6">Customers</Typography>
                     <Typography variant="h4">{customers.length}</Typography>
                   </Paper>
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6, md: 6, lg: 3 }}>
                   <Paper sx={cardStyle}>
+                    <Typography>
+                      <LiaFileInvoiceDollarSolid
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          fontWeight: 600,
+                        }}
+                      />
+                    </Typography>
                     <Typography variant="h6">Invoices</Typography>
                     <Typography variant="h4">{invoices.length}</Typography>
                   </Paper>

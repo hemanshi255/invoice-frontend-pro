@@ -76,31 +76,6 @@ function App() {
     <AppProvider>
       <Router>
         <AppRoutes />
-        {/* <Header></Header>
-        <Route path="/products">
-          <Products></Products>
-        </Route>
-
-        <Route path="/inventory">
-          <Inventory></Inventory>
-        </Route>
-
-        <Route path="/customers">
-          <Customers></Customers>
-        </Route>
-
-        <Route path="/create-invoice">
-          <CreateInvoice></CreateInvoice>
-        </Route>
-
-        <Route path="/invoices">
-          <Invoices></Invoices>
-        </Route>
-
-        <Route path="/invoices/:id">
-          <InvoiceDetail></InvoiceDetail>
-        </Route> */}
-        {/* <Dashboard></Dashboard> */}
       </Router>
     </AppProvider>
   );

@@ -97,7 +97,7 @@ const Products = () => {
               color: "#fff",
             }}
           >
-            <Typography variant="h6">Add Product</Typography>
+            <Typography variant="h6">Add PRoduct</Typography>
 
             <TextField
               fullWidth

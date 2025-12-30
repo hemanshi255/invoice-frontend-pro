@@ -39,11 +39,40 @@ const Login = () => {
           py: 10,
           background: "#2c5364",
           minHeight: "82vh",
-          alignContent: "center",
+          display: "flex",
+          alignItems: "center",
+          backgroundImage: `
+linear-gradient(
+    rgba(15, 32, 39, 0.45),
+    rgba(44, 83, 100, 0.45)
+  ),
+  url("/img/hero-bg.png")
+`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          color: "#ffffff",
         }}
       >
         <Container maxWidth="sm">
-          <Paper sx={{ p: 4, backgroundColor: "#030709", color: "#fff" }}>
+          <Paper
+            sx={{
+              p: 4,
+              backgroundColor: "#030709",
+              color: "#fff",
+              animation: "pulse 2.0s ease-in-out infinite",
+              "@keyframes pulse": {
+                "0%": {
+                  transform: "scale(1)",
+                },
+                "50%": {
+                  transform: "scale(1.05)",
+                },
+                "100%": {
+                  transform: "scale(1)",
+                },
+              },
+            }}
+          >
             <Typography variant="h5" gutterBottom>
               Login
             </Typography>
