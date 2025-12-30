@@ -16,7 +16,8 @@ import {
 } from "@mui/material";
 
 function Inventory() {
-  const { inventory, setInventory, products } = useContext(AppContext);
+  const { products, inventory, setInventory } = useContext(AppContext);
+
   const [form, setForm] = useState({
     product: "",
     batch: "",
@@ -25,27 +26,46 @@ function Inventory() {
     location: "",
   });
 
-  const handleChange = (e) =>
+  const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const addInventory = () => {
     if (!form.product || !form.batch || !form.quantity) {
-      alert("Product, batch and quantity required");
+      alert("Product, batch, and quantity are required");
       return;
     }
-    setInventory([...inventory, { ...form, quantity: Number(form.quantity) }]);
-    setForm({ product: "", batch: "", expiry: "", quantity: "", location: "" });
+
+    setInventory([
+      ...inventory,
+      {
+        ...form,
+        quantity: Number(form.quantity),
+      },
+    ]);
+
+    // Reset form after adding
+    setForm({
+      product: "",
+      batch: "",
+      expiry: "",
+      quantity: "",
+      location: "",
+    });
   };
 
   return (
-    <Container>
+    <Container maxWidth="md">
       <Typography variant="h5" gutterBottom>
         Inventory
       </Typography>
 
       <Paper sx={{ padding: 2, marginBottom: 3 }}>
-        <Typography variant="h6">Add Inventory</Typography>
+        <Typography variant="h6" gutterBottom>
+          Add Inventory
+        </Typography>
 
+        {/* Product Dropdown */}
         <Select
           fullWidth
           margin="normal"
@@ -53,8 +73,9 @@ function Inventory() {
           value={form.product}
           onChange={handleChange}
         >
-          {products.map((p, i) => (
-            <MenuItem key={i} value={p.name}>
+          <MenuItem value="">Select Product</MenuItem>
+          {products.map((p, index) => (
+            <MenuItem key={index} value={p.name}>
               {p.name}
             </MenuItem>
           ))}
@@ -68,6 +89,7 @@ function Inventory() {
           value={form.batch}
           onChange={handleChange}
         />
+
         <TextField
           fullWidth
           margin="normal"
@@ -78,6 +100,7 @@ function Inventory() {
           value={form.expiry}
           onChange={handleChange}
         />
+
         <TextField
           fullWidth
           margin="normal"
@@ -87,6 +110,7 @@ function Inventory() {
           value={form.quantity}
           onChange={handleChange}
         />
+
         <TextField
           fullWidth
           margin="normal"
@@ -96,19 +120,27 @@ function Inventory() {
           onChange={handleChange}
         />
 
-        <Button variant="contained" onClick={addInventory}>
+        <Button
+          variant="contained"
+          sx={{ marginTop: 2 }}
+          onClick={addInventory}
+        >
           Add Stock
         </Button>
       </Paper>
 
-      <Typography variant="h6">Inventory List</Typography>
+      <Typography variant="h6" gutterBottom>
+        Inventory List
+      </Typography>
+
       <Table component={Paper}>
         <TableHead>
           <TableRow>
             <TableCell>Product</TableCell>
             <TableCell>Batch</TableCell>
             <TableCell>Expiry</TableCell>
-            <TableCell>Qty</TableCell>
+            <TableCell>Quantity</TableCell>
+            <TableCell>Location</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -118,6 +150,7 @@ function Inventory() {
               <TableCell>{i.batch}</TableCell>
               <TableCell>{i.expiry}</TableCell>
               <TableCell>{i.quantity}</TableCell>
+              <TableCell>{i.location}</TableCell>
             </TableRow>
           ))}
         </TableBody>
