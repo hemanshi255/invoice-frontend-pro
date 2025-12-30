@@ -16,6 +16,7 @@ import Invoices from "./pages/Invoices";
 import InvoiceDetail from "./pages/InvoiceDetail";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import Header from "./components/Header";
 
 function AppRoutes() {
   const { isLoggedIn } = useContext(AppContext);
@@ -75,6 +76,31 @@ function App() {
     <AppProvider>
       <Router>
         <AppRoutes />
+        {/* <Header></Header>
+        <Route path="/products">
+          <Products></Products>
+        </Route>
+
+        <Route path="/inventory">
+          <Inventory></Inventory>
+        </Route>
+
+        <Route path="/customers">
+          <Customers></Customers>
+        </Route>
+
+        <Route path="/create-invoice">
+          <CreateInvoice></CreateInvoice>
+        </Route>
+
+        <Route path="/invoices">
+          <Invoices></Invoices>
+        </Route>
+
+        <Route path="/invoices/:id">
+          <InvoiceDetail></InvoiceDetail>
+        </Route> */}
+        {/* <Dashboard></Dashboard> */}
       </Router>
     </AppProvider>
   );
