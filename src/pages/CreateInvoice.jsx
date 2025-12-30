@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   Container,
   TextField,
+  FormControl,
+  InputLabel,
   Select,
   MenuItem,
   Button,
@@ -13,23 +15,39 @@ import {
   TableBody,
   Paper,
 } from "@mui/material";
+import Box from "@mui/material/Box";
+import { AppContext } from "../context/AppContext";
+import { useHistory } from "react-router-dom";
+
+const textFieldStyle = {
+  "& .MuiInputBase-input": {
+    color: "#666",
+    WebkitTextFillColor: "#666",
+  },
+  "& .MuiInputLabel-root": {
+    color: "#00e5ff",
+  },
+  "& .MuiInputLabel-root.Mui-disabled": {
+    color: "#00e5ff",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "#1de9b6",
+    },
+    "&:hover fieldset": {
+      borderColor: "#1de9b6",
+    },
+    "&.Mui-disabled fieldset": {
+      borderColor: "#1de9b6",
+    },
+  },
+};
 
 function CreateInvoice() {
-  // MOCK DATA (later from backend)
-  const customers = ["ABC Labs", "XYZ Pharma"];
-  const products = [
-    { name: "Hydrochloric Acid", price: 800 },
-    { name: "Sodium Hydroxide", price: 600 },
-  ];
+  const history = useHistory();
 
-  const inventory = [
-    {
-      product: "Hydrochloric Acid",
-      batch: "HCL-2025-A",
-      expiry: "2027-06-30",
-      quantity: 50,
-    },
-  ];
+  const { customers, products, inventory, invoices, setInvoices } =
+    useContext(AppContext);
 
   const [customer, setCustomer] = useState("");
   const [items, setItems] = useState([]);
@@ -50,7 +68,6 @@ function CreateInvoice() {
     }
 
     const productData = products.find((p) => p.name === currentItem.product);
-
     const total = productData.price * currentItem.quantity;
 
     setItems([
@@ -58,122 +75,211 @@ function CreateInvoice() {
       {
         ...currentItem,
         price: productData.price,
+        tax: productData.tax,
         total,
       },
     ]);
 
-    setCurrentItem({
-      product: "",
-      batch: "",
-      quantity: "",
-    });
+    setCurrentItem({ product: "", batch: "", quantity: "" });
   };
 
-  const grandTotal = items.reduce((sum, i) => sum + i.total, 0);
+  const saveInvoice = () => {
+    if (!customer || items.length === 0) {
+      alert("Select customer and add items");
+      return;
+    }
+
+    const subTotal = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
+    const gstAmount = items.reduce(
+      (sum, i) => sum + (i.price * i.quantity * i.tax) / 100,
+      0
+    );
+    const grandTotal = subTotal + gstAmount;
+
+    const newInvoice = {
+      customer,
+      date: new Date().toLocaleDateString(),
+      items: items.map((i) => ({
+        product: i.product,
+        batch: i.batch,
+        quantity: i.quantity,
+        price: i.price,
+        tax: i.tax || 0,
+        total: i.total,
+      })),
+      subTotal,
+      gstAmount,
+      grandTotal,
+    };
+
+    setInvoices((prev) => [...prev, newInvoice]);
+    history.push("/invoices");
+  };
+
+  const subTotal = items.reduce((sum, i) => sum + i.total, 0);
+  const gstAmount = subTotal * 0.18;
+  const grandTotal = subTotal + gstAmount;
 
   return (
-    <Container>
-      <Typography variant="h5" gutterBottom>
-        Create Invoice
-      </Typography>
+    <Box sx={{ py: "60px", background: "#2c5364" }}>
+      <Container maxWidth="md">
+        <Typography variant="h5" gutterBottom sx={{ color: "#fff" }}>
+          Create Invoice
+        </Typography>
 
-      <Paper sx={{ padding: 2, marginBottom: 3 }}>
-        <Typography variant="h6">Customer</Typography>
-
-        <Select
-          fullWidth
-          value={customer}
-          onChange={(e) => setCustomer(e.target.value)}
+        {/* CUSTOMER */}
+        <Paper
+          sx={{
+            padding: 2,
+            marginBottom: 3,
+            backgroundColor: "#030709",
+            color: "#fff",
+          }}
         >
-          {customers.map((c, i) => (
-            <MenuItem key={i} value={c}>
-              {c}
-            </MenuItem>
-          ))}
-        </Select>
-      </Paper>
+          <Typography variant="h6">Customer</Typography>
 
-      <Paper sx={{ padding: 2, marginBottom: 3 }}>
-        <Typography variant="h6">Add Item</Typography>
+          <FormControl fullWidth sx={{ mt: 2, ...textFieldStyle }}>
+            <InputLabel>Customer</InputLabel>
+            <Select
+              value={customer}
+              label="Customer"
+              onChange={(e) => setCustomer(e.target.value)}
+            >
+              {customers.map((c, i) => (
+                <MenuItem key={i} value={c.name}>
+                  {c.organization} ({c.name})
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Paper>
 
-        <Select
-          fullWidth
-          margin="normal"
-          name="product"
-          value={currentItem.product}
-          onChange={handleItemChange}
+        {/* ADD ITEM */}
+        <Paper
+          sx={{
+            padding: 2,
+            marginBottom: 3,
+            backgroundColor: "#030709",
+            color: "#fff",
+          }}
         >
-          {products.map((p, i) => (
-            <MenuItem key={i} value={p.name}>
-              {p.name}
-            </MenuItem>
-          ))}
-        </Select>
+          <Typography variant="h6">Add Item</Typography>
 
-        <Select
-          fullWidth
-          margin="normal"
-          name="batch"
-          value={currentItem.batch}
-          onChange={handleItemChange}
+          <FormControl fullWidth sx={{ mt: 2, ...textFieldStyle }}>
+            <InputLabel>Product</InputLabel>
+            <Select
+              name="product"
+              value={currentItem.product}
+              onChange={handleItemChange}
+              label="Product"
+            >
+              {products.map((p, i) => (
+                <MenuItem key={i} value={p.name}>
+                  {p.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControl fullWidth sx={{ mt: 2, ...textFieldStyle }}>
+            <InputLabel>Batch</InputLabel>
+            <Select
+              name="batch"
+              value={currentItem.batch}
+              onChange={handleItemChange}
+              label="Batch"
+            >
+              {inventory
+                .filter((i) => i.product === currentItem.product)
+                .map((i, index) => (
+                  <MenuItem key={index} value={i.batch}>
+                    {i.batch} (Exp: {i.expiry})
+                  </MenuItem>
+                ))}
+            </Select>
+          </FormControl>
+
+          <TextField
+            fullWidth
+            margin="normal"
+            label="Quantity"
+            type="number"
+            name="quantity"
+            value={currentItem.quantity}
+            onChange={handleItemChange}
+            sx={textFieldStyle}
+          />
+
+          <Button
+            variant="contained"
+            onClick={addItem}
+            sx={{
+              marginTop: 2,
+              fontWeight: 600,
+              color: "#000",
+              background: "linear-gradient(90deg, #00e5ff, #1de9b6)",
+              "&:hover": {
+                background: "linear-gradient(90deg, #1de9b6, #00e5ff)",
+              },
+            }}
+          >
+            Add Item
+          </Button>
+        </Paper>
+
+        {/* ITEMS TABLE */}
+        <Typography variant="h6" sx={{ color: "#fff" }}>
+          Invoice Items
+        </Typography>
+
+        <Table
+          component={Paper}
+          sx={{ backgroundColor: "#030709", color: "#fff" }}
         >
-          {inventory
-            .filter((i) => i.product === currentItem.product)
-            .map((i, index) => (
-              <MenuItem key={index} value={i.batch}>
-                {i.batch} (Exp: {i.expiry})
-              </MenuItem>
-            ))}
-        </Select>
-
-        <TextField
-          fullWidth
-          margin="normal"
-          label="Quantity"
-          type="number"
-          name="quantity"
-          value={currentItem.quantity}
-          onChange={handleItemChange}
-        />
-
-        <Button variant="contained" onClick={addItem}>
-          Add Item
-        </Button>
-      </Paper>
-
-      <Typography variant="h6">Invoice Items</Typography>
-
-      <Table component={Paper}>
-        <TableHead>
-          <TableRow>
-            <TableCell>Product</TableCell>
-            <TableCell>Batch</TableCell>
-            <TableCell>Qty</TableCell>
-            <TableCell>Price</TableCell>
-            <TableCell>Total</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {items.map((i, index) => (
-            <TableRow key={index}>
-              <TableCell>{i.product}</TableCell>
-              <TableCell>{i.batch}</TableCell>
-              <TableCell>{i.quantity}</TableCell>
-              <TableCell>{i.price}</TableCell>
-              <TableCell>{i.total}</TableCell>
+          <TableHead>
+            <TableRow>
+              <TableCell sx={{ color: "#00e5ff" }}>Product</TableCell>
+              <TableCell sx={{ color: "#00e5ff" }}>Batch</TableCell>
+              <TableCell sx={{ color: "#00e5ff" }}>Qty</TableCell>
+              <TableCell sx={{ color: "#00e5ff" }}>Price</TableCell>
+              <TableCell sx={{ color: "#00e5ff" }}>Total</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHead>
+          <TableBody>
+            {items.map((i, index) => (
+              <TableRow key={index}>
+                <TableCell sx={{ color: "#fff" }}>{i.product}</TableCell>
+                <TableCell sx={{ color: "#fff" }}>{i.batch}</TableCell>
+                <TableCell sx={{ color: "#fff" }}>{i.quantity}</TableCell>
+                <TableCell sx={{ color: "#fff" }}>{i.price}</TableCell>
+                <TableCell sx={{ color: "#fff" }}>{i.total}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
 
-      <Typography variant="h6" sx={{ marginTop: 2 }}>
-        Grand Total: ₹{grandTotal}
-      </Typography>
+        <Typography sx={{ marginTop: 2, color: "#fff" }}>
+          Sub Total: ₹{subTotal.toFixed(2)}
+        </Typography>
 
-      <Button variant="contained" color="success" sx={{ marginTop: 2 }}>
-        Save Invoice
-      </Button>
-    </Container>
+        <Typography sx={{ color: "#fff" }}>
+          GST (18%): ₹{gstAmount.toFixed(2)}
+        </Typography>
+
+        <Typography variant="h6" sx={{ color: "#fff" }}>
+          Grand Total: ₹{grandTotal.toFixed(2)}
+        </Typography>
+
+        <Button
+          variant="contained"
+          color="success"
+          sx={{ marginTop: 2 }}
+          onClick={saveInvoice}
+        >
+          Save Invoice
+        </Button>
+      </Container>
+    </Box>
   );
 }
 
