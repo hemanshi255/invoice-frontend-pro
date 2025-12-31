@@ -8,14 +8,10 @@ import {
 } from "react-router-dom";
 import { AppProvider, AppContext } from "./context/AppContext";
 
-import Products from "./pages/Products";
-import Inventory from "./pages/Inventory";
-import Customers from "./pages/Customers";
-import CreateInvoice from "./pages/CreateInvoice";
-import Invoices from "./pages/Invoices";
-import InvoiceDetail from "./pages/InvoiceDetail";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import Invoices from "./pages/Invoices";
+import InvoiceDetail from "./pages/InvoiceDetail";
 
 function AppRoutes() {
   const { isLoggedIn } = useContext(AppContext);
@@ -32,34 +28,12 @@ function AppRoutes() {
   return (
     <Switch>
       <Route path="/login" component={Login} />
-      <Route
-        path="/dashboard"
-        render={() => (isLoggedIn ? <Dashboard /> : history.push("/login"))}
-      />
-      <Route
-        path="/products"
-        render={() => (isLoggedIn ? <Products /> : history.push("/login"))}
-      />
-      <Route
-        path="/inventory"
-        render={() => (isLoggedIn ? <Inventory /> : history.push("/login"))}
-      />
-      <Route
-        path="/customers"
-        render={() => (isLoggedIn ? <Customers /> : history.push("/login"))}
-      />
-      <Route
-        path="/create-invoice"
-        render={() => (isLoggedIn ? <CreateInvoice /> : history.push("/login"))}
-      />
-      <Route
-        path="/invoices/:id"
-        render={() => (isLoggedIn ? <InvoiceDetail /> : history.push("/login"))}
-      />
-      <Route
-        path="/invoices"
-        render={() => (isLoggedIn ? <Invoices /> : history.push("/login"))}
-      />
+
+      <Route path="/dashboard" component={Dashboard} />
+
+      <Route path="/invoices/:id" component={InvoiceDetail} />
+      <Route path="/invoices" component={Invoices} />
+
       <Route
         path="/"
         render={() =>
