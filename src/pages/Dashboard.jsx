@@ -1,4 +1,3 @@
-// /src/pages/Dashboard.jsx
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import { Container, Typography, Paper, Grid, Box } from "@mui/material";

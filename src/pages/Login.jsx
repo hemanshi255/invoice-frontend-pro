@@ -20,10 +20,9 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    // Hardcoded credentials
     if (username === "admin" && password === "admin123") {
-      setIsLoggedIn(true); // update context state
-      history.push("/dashboard"); // redirect to dashboard
+      setIsLoggedIn(true);
+      history.push("/dashboard");
     } else {
       alert("Invalid credentials");
     }
