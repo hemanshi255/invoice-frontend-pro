@@ -26,6 +26,12 @@ import Inventory from "./Inventory";
 import Customers from "./Customers";
 import CreateInvoice from "./CreateInvoice";
 import { Button } from "@mui/material";
+import Invoices from "./Invoices";
+import { MdChecklist } from "react-icons/md";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const drawerWidth = 240;
 
@@ -34,6 +40,7 @@ const Dashboard = (props) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
   const [activePage, setActivePage] = React.useState("products");
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const { products, inventory, customers, invoices, setIsLoggedIn } =
     useContext(AppContext);
@@ -45,7 +52,7 @@ const Dashboard = (props) => {
     background: "#030709",
     color: "#fff",
     cursor: "pointer",
-    "&:hover": { background: "#1de9b6", color: "#000" },
+    boxShadow: " 0px 0px 10px 3px #1de9b6",
   };
 
   const handleDrawerClose = () => {
@@ -66,6 +73,14 @@ const Dashboard = (props) => {
   const handleLogout = () => {
     setIsLoggedIn(false);
     history.push("/login");
+  };
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   const drawer = (
@@ -137,6 +152,21 @@ const Dashboard = (props) => {
             <ListItemText primary="Create Invoice" />
           </ListItemButton>
         </ListItem>
+
+        <ListItem
+          disablePadding
+          sx={{ backgroundColor: "#030709", color: "#fff", mb: 1 }}
+          onClick={() => setActivePage("invoices")}
+        >
+          <ListItemButton>
+            <ListItemIcon>
+              <MdChecklist
+                style={{ color: "#fff", fontSize: "20px", fontWeight: 600 }}
+              />
+            </ListItemIcon>
+            <ListItemText primary="Invoices" />
+          </ListItemButton>
+        </ListItem>
       </List>
     </div>
   );
@@ -175,16 +205,64 @@ const Dashboard = (props) => {
             >
               Dashboard
             </Typography>
-            <Button
-              variant="contained"
-              color="error"
-              onClick={handleLogout}
-              sx={{ ml: 2 }}
-            >
-              Logout
-            </Button>
+
+            <div>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                {/* <MenuItem
+                  onClick={handleLogout}
+                  sx={{
+                    backgroundColor: "#030709",
+                    color: "#00e5ff",
+                    "&:hover": {
+                      background: "#242525ff",
+                    },
+                  }}
+                >
+                  Logout
+                </MenuItem> */}
+
+                <MenuItem
+                  component={Link}
+                  to="/account"
+                  sx={{
+                    backgroundColor: "#030709",
+                    color: "#00e5ff",
+                    "&:hover": {
+                      background: "#242525ff",
+                    },
+                  }}
+                >
+                  Account
+                </MenuItem>
+              </Menu>
+            </div>
           </Toolbar>
         </AppBar>
+
         <Box
           component="nav"
           sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -234,7 +312,7 @@ const Dashboard = (props) => {
         >
           <Toolbar />
           <Box sx={{ background: "#2c5364", minHeight: "100vh" }}>
-            <Box sx={{ px: 2, py: 2 }}>
+            <Box sx={{ px: 2, py: 3 }}>
               <Grid container spacing={2}>
                 <Grid size={{ xs: 12, sm: 6, md: 6, lg: 3 }}>
                   <Paper sx={cardStyle}>
@@ -304,6 +382,7 @@ const Dashboard = (props) => {
               {activePage === "inventory" && <Inventory />}
               {activePage === "customers" && <Customers />}
               {activePage === "create-invoice" && <CreateInvoice />}
+              {activePage === "invoices" && <Invoices />}
             </Box>
           </Box>
         </Box>

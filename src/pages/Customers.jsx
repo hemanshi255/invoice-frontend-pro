@@ -95,7 +95,7 @@ const Customers = () => {
     <>
       <Box sx={{ py: "60px", background: "#2c5364", minHeight: "87vh" }}>
         <Container maxWidth="md">
-          <Typography variant="h5" gutterBottom sx={{ color: "#fff" }}>
+          <Typography variant="h5" gutterBottom sx={{ color: "#fff", mb: 2 }}>
             Customers
           </Typography>
 
@@ -105,9 +105,15 @@ const Customers = () => {
               marginBottom: 3,
               backgroundColor: "#030709",
               color: "#fff",
+              boxShadow: "0px 0px 10px 5px #1de9b6",
             }}
           >
-            <Typography variant="h6">Add Customer</Typography>
+            <Typography
+              variant="h6"
+              sx={{ fontFamily: "monospace", fontStyle: "italic" }}
+            >
+              Add Customer
+            </Typography>
             <TextField
               fullWidth
               margin="normal"
@@ -162,51 +168,64 @@ const Customers = () => {
             </Button>
           </Paper>
 
-          <Typography variant="h6" gutterBottom sx={{ color: "#fff" }}>
+          <Typography variant="h6" gutterBottom sx={{ color: "#fff", mb: 2 }}>
             Customer List
           </Typography>
-          <Table
-            component={Paper}
-            sx={{ backgroundColor: "#030709", color: "#fff" }}
+
+          <Box
+            sx={{ overflowX: "auto", boxShadow: "0px 0px 10px 5px #00e5ff" }}
           >
-            <TableHead>
-              <TableRow>
-                <TableCell sx={{ color: "#00e5ff" }}>Name</TableCell>
-                <TableCell sx={{ color: "#00e5ff" }}>Organization</TableCell>
-                <TableCell sx={{ color: "#00e5ff" }}>Phone</TableCell>
-                <TableCell sx={{ color: "#00e5ff" }}>GST</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {customers.map((c, index) => (
-                <TableRow key={index}>
-                  <TableCell sx={{ color: "#fff" }}>{c.name}</TableCell>
-                  <TableCell sx={{ color: "#fff" }}>{c.organization}</TableCell>
-                  <TableCell sx={{ color: "#fff" }}>{c.phone}</TableCell>
-                  <TableCell sx={{ color: "#fff" }}>{c.gst}</TableCell>
-                  <TableCell>
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      size="small"
-                      onClick={() => handleEdit(index)}
-                      sx={{ mr: 1 }}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      size="small"
-                      onClick={() => handleDelete(index)}
-                    >
-                      Delete
-                    </Button>
-                  </TableCell>
+            <Table
+              component={Paper}
+              sx={{ backgroundColor: "#030709", color: "#fff" }}
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={{ color: "#00e5ff" }}>Name</TableCell>
+                  <TableCell sx={{ color: "#00e5ff" }}>Organization</TableCell>
+                  <TableCell sx={{ color: "#00e5ff" }}>Phone</TableCell>
+                  <TableCell sx={{ color: "#00e5ff" }}>GST</TableCell>
+                  <TableCell sx={{ color: "#00e5ff" }}>EDIT</TableCell>
+                  <TableCell sx={{ color: "#00e5ff" }}>Delete</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHead>
+              <TableBody>
+                {customers.map((c, index) => (
+                  <TableRow key={index}>
+                    <TableCell sx={{ color: "#fff" }}>{c.name}</TableCell>
+                    <TableCell sx={{ color: "#fff" }}>
+                      {c.organization}
+                    </TableCell>
+                    <TableCell sx={{ color: "#fff" }}>{c.phone}</TableCell>
+                    <TableCell sx={{ color: "#fff" }}>{c.gst}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        size="small"
+                        onClick={() => handleEdit(index)}
+                        sx={{ boxShadow: "0px 0px 10px 2px #495d8aff" }}
+                      >
+                        EDIT
+                      </Button>
+                    </TableCell>
+
+                    <TableCell>
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        size="small"
+                        onClick={() => handleDelete(index)}
+                        sx={{ boxShadow: "0px 0px 10px 2px #945f5fff" }}
+                      >
+                        DELETE
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Box>
 
           {editIndex !== null && (
             <Paper

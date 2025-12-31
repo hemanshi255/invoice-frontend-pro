@@ -24,6 +24,7 @@ const textFieldStyle = {
   "& .MuiInputBase-input": {
     color: "#a8a7a7ff",
     WebkitTextFillColor: "#a8a7a7ff",
+    textTransform: "capitalize",
   },
   "& .MuiInputLabel-root": {
     color: "#00e5ff",
@@ -116,7 +117,14 @@ const Products = () => {
     <>
       <Box sx={{ py: "60px", background: "#2c5364" }}>
         <Container maxWidth="md">
-          <Typography variant="h5" gutterBottom sx={{ color: "#fff" }}>
+          <Typography
+            variant="h5"
+            gutterBottom
+            sx={{
+              color: "#fff",
+              mb: 2,
+            }}
+          >
             Products
           </Typography>
 
@@ -126,9 +134,15 @@ const Products = () => {
               marginBottom: 3,
               backgroundColor: "#030709",
               color: "#fff",
+              boxShadow: "0px 0px 10px 5px #1de9b6",
             }}
           >
-            <Typography variant="h6">Add PRoduct</Typography>
+            <Typography
+              variant="h6"
+              sx={{ fontFamily: "monospace", fontStyle: "italic" }}
+            >
+              Add Product
+            </Typography>
 
             <TextField
               fullWidth
@@ -230,53 +244,72 @@ const Products = () => {
             </Button>
           </Paper>
 
-          <Typography variant="h6" gutterBottom sx={{ color: "#fff" }}>
+          <Typography variant="h6" gutterBottom sx={{ color: "#fff", mb: 2 }}>
             Product List
           </Typography>
-          <Table
-            component={Paper}
-            sx={{ backgroundColor: "#030709", color: "#fff" }}
+
+          <Box
+            sx={{ overflowX: "auto", boxShadow: "0px 0px 10px 5px #00e5ff" }}
           >
-            <TableHead>
-              <TableRow>
-                <TableCell sx={{ color: "#00e5ff" }}>Name</TableCell>
-                <TableCell sx={{ color: "#00e5ff" }}>Category</TableCell>
-                <TableCell sx={{ color: "#00e5ff" }}>Price (₹)</TableCell>
-                <TableCell sx={{ color: "#00e5ff" }}>Tax (%)</TableCell>
-                <TableCell sx={{ color: "#00e5ff" }}>Hazard</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {products.map((p, index) => (
-                <TableRow key={index}>
-                  <TableCell sx={{ color: "#fff" }}>{p.name}</TableCell>
-                  <TableCell sx={{ color: "#fff" }}>{p.category}</TableCell>
-                  <TableCell sx={{ color: "#fff" }}>{p.price}</TableCell>
-                  <TableCell sx={{ color: "#fff" }}>{p.tax}</TableCell>
-                  <TableCell sx={{ color: "#fff" }}>{p.hazardLevel}</TableCell>
-                  <TableCell>
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      size="small"
-                      onClick={() => handleEdit(index)}
-                      sx={{ mr: 1 }}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      size="small"
-                      onClick={() => handleDelete(index)}
-                    >
-                      Delete
-                    </Button>
-                  </TableCell>
+            <Table
+              component={Paper}
+              sx={{
+                backgroundColor: "#030709",
+                color: "#fff",
+              }}
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={{ color: "#00e5ff" }}>Name</TableCell>
+                  <TableCell sx={{ color: "#00e5ff" }}>Category</TableCell>
+                  <TableCell sx={{ color: "#00e5ff" }}>Price (₹)</TableCell>
+                  <TableCell sx={{ color: "#00e5ff" }}>Tax (%)</TableCell>
+                  <TableCell sx={{ color: "#00e5ff" }}>Hazard</TableCell>
+                  <TableCell sx={{ color: "#00e5ff" }}>Edit</TableCell>
+                  <TableCell sx={{ color: "#00e5ff" }}>Delete</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHead>
+              <TableBody>
+                {products.map((p, index) => (
+                  <TableRow key={index}>
+                    <TableCell
+                      sx={{ color: "#fff", textTransform: "capitalize" }}
+                    >
+                      {p.name}
+                    </TableCell>
+                    <TableCell sx={{ color: "#fff" }}>{p.category}</TableCell>
+                    <TableCell sx={{ color: "#fff" }}>{p.price}</TableCell>
+                    <TableCell sx={{ color: "#fff" }}>{p.tax}</TableCell>
+                    <TableCell sx={{ color: "#fff" }}>
+                      {p.hazardLevel}
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        size="small"
+                        onClick={() => handleEdit(index)}
+                        sx={{ boxShadow: "0px 0px 10px 2px #495d8aff" }}
+                      >
+                        EDIT
+                      </Button>
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        size="small"
+                        onClick={() => handleDelete(index)}
+                        sx={{ boxShadow: "0px 0px 10px 2px #945f5fff" }}
+                      >
+                        DELETE
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Box>
 
           {editIndex !== null && (
             <Paper

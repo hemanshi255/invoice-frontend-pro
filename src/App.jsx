@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Invoices from "./pages/Invoices";
 import InvoiceDetail from "./pages/InvoiceDetail";
+import Company from "./pages/Company";
 
 function AppRoutes() {
   const { isLoggedIn } = useContext(AppContext);
@@ -31,8 +32,9 @@ function AppRoutes() {
 
       <Route path="/dashboard" component={Dashboard} />
 
+      <Route path="/account" component={Company}></Route>
+
       <Route path="/invoices/:id" component={InvoiceDetail} />
-      <Route path="/invoices" component={Invoices} />
 
       <Route
         path="/"

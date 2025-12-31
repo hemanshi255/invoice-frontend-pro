@@ -42,15 +42,15 @@ const Login = () => {
           display: "flex",
           alignItems: "center",
           backgroundImage: `
-linear-gradient(
-    rgba(15, 32, 39, 0.45),
-    rgba(44, 83, 100, 0.45)
-  ),
-  url("/img/hero-bg.png")
-`,
+          linear-gradient(
+              rgba(15, 32, 39, 0.45),
+              rgba(44, 83, 100, 0.45)
+            ),
+            url("/img/hero-bg.png")
+          `,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          color: "#ffffff",
+          color: "#fff",
         }}
       >
         <Container maxWidth="sm">
@@ -59,13 +59,14 @@ linear-gradient(
               p: 4,
               backgroundColor: "#030709",
               color: "#fff",
+              boxShadow: " 0px 0px 15px 5px #1de9b6",
               animation: "pulse 2.0s ease-in-out infinite",
               "@keyframes pulse": {
                 "0%": {
                   transform: "scale(1)",
                 },
                 "50%": {
-                  transform: "scale(1.05)",
+                  transform: "scale(1.03)",
                 },
                 "100%": {
                   transform: "scale(1)",

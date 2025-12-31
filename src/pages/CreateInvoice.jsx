@@ -162,7 +162,7 @@ const CreateInvoice = () => {
     <>
       <Box sx={{ py: "60px", background: "#2c5364" }}>
         <Container maxWidth="md">
-          <Typography variant="h5" gutterBottom sx={{ color: "#fff" }}>
+          <Typography variant="h5" gutterBottom sx={{ color: "#fff", mb: 2 }}>
             Create Invoice
           </Typography>
 
@@ -173,9 +173,15 @@ const CreateInvoice = () => {
               marginBottom: 3,
               backgroundColor: "#030709",
               color: "#fff",
+              boxShadow: "0px 0px 10px 5px #1de9b6",
             }}
           >
-            <Typography variant="h6">Customer</Typography>
+            <Typography
+              variant="h6"
+              sx={{ fontFamily: "monospace", fontStyle: "italic" }}
+            >
+              Customer
+            </Typography>
 
             <FormControl fullWidth sx={{ mt: 2, ...textFieldStyle }}>
               <InputLabel>Customer</InputLabel>
@@ -200,9 +206,15 @@ const CreateInvoice = () => {
               marginBottom: 3,
               backgroundColor: "#030709",
               color: "#fff",
+              boxShadow: "0px 0px 10px 5px #1de9b6",
             }}
           >
-            <Typography variant="h6">Add Item</Typography>
+            <Typography
+              variant="h6"
+              sx={{ fontFamily: "monospace", fontStyle: "italic" }}
+            >
+              Add Item
+            </Typography>
 
             <FormControl fullWidth sx={{ mt: 2, ...textFieldStyle }}>
               <InputLabel>Product</InputLabel>
@@ -267,35 +279,37 @@ const CreateInvoice = () => {
           </Paper>
 
           {/* ITEMS TABLE */}
-          <Typography variant="h6" sx={{ color: "#fff" }}>
+          <Typography variant="h6" sx={{ color: "#fff", mb: 2 }}>
             Invoice Items
           </Typography>
 
-          <Table
-            component={Paper}
-            sx={{ backgroundColor: "#030709", color: "#fff" }}
-          >
-            <TableHead>
-              <TableRow>
-                <TableCell sx={{ color: "#00e5ff" }}>Product</TableCell>
-                <TableCell sx={{ color: "#00e5ff" }}>Batch</TableCell>
-                <TableCell sx={{ color: "#00e5ff" }}>Qty</TableCell>
-                <TableCell sx={{ color: "#00e5ff" }}>Price</TableCell>
-                <TableCell sx={{ color: "#00e5ff" }}>Total</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {items.map((i, index) => (
-                <TableRow key={index}>
-                  <TableCell sx={{ color: "#fff" }}>{i.product}</TableCell>
-                  <TableCell sx={{ color: "#fff" }}>{i.batch}</TableCell>
-                  <TableCell sx={{ color: "#fff" }}>{i.quantity}</TableCell>
-                  <TableCell sx={{ color: "#fff" }}>{i.price}</TableCell>
-                  <TableCell sx={{ color: "#fff" }}>{i.total}</TableCell>
+          <Box sx={{ overflow: "auto", boxShadow: "0px 0px 10px 5px #00e5ff" }}>
+            <Table
+              component={Paper}
+              sx={{ backgroundColor: "#030709", color: "#fff" }}
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={{ color: "#00e5ff" }}>Product</TableCell>
+                  <TableCell sx={{ color: "#00e5ff" }}>Batch</TableCell>
+                  <TableCell sx={{ color: "#00e5ff" }}>Qty</TableCell>
+                  <TableCell sx={{ color: "#00e5ff" }}>Price</TableCell>
+                  <TableCell sx={{ color: "#00e5ff" }}>Total</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHead>
+              <TableBody>
+                {items.map((i, index) => (
+                  <TableRow key={index}>
+                    <TableCell sx={{ color: "#fff" }}>{i.product}</TableCell>
+                    <TableCell sx={{ color: "#fff" }}>{i.batch}</TableCell>
+                    <TableCell sx={{ color: "#fff" }}>{i.quantity}</TableCell>
+                    <TableCell sx={{ color: "#fff" }}>{i.price}</TableCell>
+                    <TableCell sx={{ color: "#fff" }}>{i.total}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Box>
 
           <Typography sx={{ marginTop: 2, color: "#fff" }}>
             Sub Total: ₹{subTotal.toFixed(2)}

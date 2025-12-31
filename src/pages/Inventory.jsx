@@ -24,6 +24,7 @@ const textFieldStyle = {
   "& .MuiInputBase-input": {
     color: "#a8a7a7ff",
     WebkitTextFillColor: "#a8a7a7ff",
+    textTransform: "capitalize",
   },
   "& .MuiInputLabel-root": {
     color: "#00e5ff",
@@ -70,7 +71,7 @@ const Inventory = () => {
     <>
       <Box sx={{ py: "60px", background: "#2c5364", minHeight: "87vh" }}>
         <Container maxWidth="md">
-          <Typography variant="h5" gutterBottom sx={{ color: "#fff" }}>
+          <Typography variant="h5" gutterBottom sx={{ color: "#fff", mb: 2 }}>
             Inventory
           </Typography>
 
@@ -80,9 +81,15 @@ const Inventory = () => {
               marginBottom: 3,
               backgroundColor: "#030709",
               color: "#fff",
+              boxShadow: "0px 0px 10px 5px #1de9b6",
             }}
           >
-            <Typography variant="h6">Add Inventory</Typography>
+            <Typography
+              variant="h6"
+              sx={{ fontFamily: "monospace", fontStyle: "italic" }}
+            >
+              Add Inventory
+            </Typography>
 
             <FormControl fullWidth sx={{ mt: 2, ...textFieldStyle }}>
               <InputLabel>product</InputLabel>
@@ -157,32 +164,34 @@ const Inventory = () => {
             </Button>
           </Paper>
 
-          <Typography variant="h6" sx={{ color: "#fff" }}>
+          <Typography variant="h6" sx={{ color: "#fff", mb: 2 }}>
             Inventory List
           </Typography>
-          <Table
-            component={Paper}
-            sx={{ backgroundColor: "#030709", color: "#fff" }}
-          >
-            <TableHead>
-              <TableRow>
-                <TableCell sx={{ color: "#00e5ff" }}>Product</TableCell>
-                <TableCell sx={{ color: "#00e5ff" }}>Batch</TableCell>
-                <TableCell sx={{ color: "#00e5ff" }}>Expiry</TableCell>
-                <TableCell sx={{ color: "#00e5ff" }}>Qty</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {inventory.map((i, index) => (
-                <TableRow key={index}>
-                  <TableCell sx={{ color: "#fff" }}>{i.product}</TableCell>
-                  <TableCell sx={{ color: "#fff" }}>{i.batch}</TableCell>
-                  <TableCell sx={{ color: "#fff" }}>{i.expiry}</TableCell>
-                  <TableCell sx={{ color: "#fff" }}>{i.quantity}</TableCell>
+          <Box sx={{ boxShadow: "0px 0px 10px 5px #00e5ff", overflow: "auto" }}>
+            <Table
+              component={Paper}
+              sx={{ backgroundColor: "#030709", color: "#fff" }}
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={{ color: "#00e5ff" }}>Product</TableCell>
+                  <TableCell sx={{ color: "#00e5ff" }}>Batch</TableCell>
+                  <TableCell sx={{ color: "#00e5ff" }}>Expiry</TableCell>
+                  <TableCell sx={{ color: "#00e5ff" }}>Qty</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHead>
+              <TableBody>
+                {inventory.map((i, index) => (
+                  <TableRow key={index}>
+                    <TableCell sx={{ color: "#fff" }}>{i.product}</TableCell>
+                    <TableCell sx={{ color: "#fff" }}>{i.batch}</TableCell>
+                    <TableCell sx={{ color: "#fff" }}>{i.expiry}</TableCell>
+                    <TableCell sx={{ color: "#fff" }}>{i.quantity}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Box>
         </Container>
       </Box>
     </>

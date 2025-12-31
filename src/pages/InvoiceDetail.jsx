@@ -42,7 +42,7 @@ const InvoiceDetail = () => {
     <>
       <Box sx={{ py: "60px", background: "#2c5364", minHeight: "87vh" }}>
         <Container maxWidth="md">
-          <Typography variant="h5" gutterBottom sx={{ color: "#fff" }}>
+          <Typography variant="h5" gutterBottom sx={{ color: "#fff", mb: 2 }}>
             Invoice Details
           </Typography>
 
@@ -50,9 +50,10 @@ const InvoiceDetail = () => {
           <Paper
             sx={{
               padding: 2,
-              marginBottom: 3,
+              marginBottom: 4,
               backgroundColor: "#030709",
               color: "#fff",
+              boxShadow: "0px 0px 10px 5px #1de9b6",
             }}
           >
             <Typography variant="subtitle1">
@@ -67,12 +68,18 @@ const InvoiceDetail = () => {
           <Paper
             sx={{
               padding: 2,
-              marginBottom: 3,
+              marginBottom: 4,
               backgroundColor: "#030709",
               color: "#fff",
+              boxShadow: "0px 0px 10px 5px #1de9b6",
             }}
           >
-            <Typography variant="h6">Customer Details</Typography>
+            <Typography
+              variant="h6"
+              sx={{ fontFamily: "monospace", fontStyle: "italic" }}
+            >
+              Customer Details
+            </Typography>
             <Divider sx={{ marginY: 1 }} />
             <Typography>Name: {customer?.name}</Typography>
             <Typography>Organization: {customer?.organization}</Typography>
@@ -81,10 +88,22 @@ const InvoiceDetail = () => {
           </Paper>
 
           {/* Items Table */}
-          <Paper sx={{ padding: 2, backgroundColor: "#030709", color: "#fff" }}>
-            <Typography variant="h6" gutterBottom>
+          <Paper
+            sx={{
+              padding: 2,
+              backgroundColor: "#030709",
+              color: "#fff",
+              boxShadow: "0px 0px 10px 5px #1de9b6",
+            }}
+          >
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{ fontFamily: "monospace", fontStyle: "italic" }}
+            >
               Invoice Items
             </Typography>
+
             <Box sx={{ overflowX: "auto" }}>
               <Table>
                 <TableHead>
@@ -148,9 +167,17 @@ const InvoiceDetail = () => {
               marginTop: 3,
               backgroundColor: "#030709",
               color: "#fff",
+              boxShadow: "0px 0px 10px 5px #1de9b6",
             }}
           >
-            <Typography variant="h6" sx={{ color: "#fff" }}>
+            <Typography
+              variant="h6"
+              sx={{
+                color: "#fff",
+                fontStyle: "italic",
+                fontFamily: "monospace",
+              }}
+            >
               Safety Notes
             </Typography>
             <Divider sx={{ marginY: 1 }} />
