@@ -16,6 +16,8 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Alert,
+  Snackbar,
   Paper,
 } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -65,13 +67,23 @@ const Products = () => {
     safetyNotes: "",
   });
 
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "error",
+  });
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const addProduct = () => {
     if (!form.name || !form.price) {
-      alert("Product name and price are required");
+      setSnackbar({
+        open: true,
+        message: "Product,Name and Price required",
+        severity: "error",
+      });
       return;
     }
     const newProduct = {
@@ -388,6 +400,21 @@ const Products = () => {
               </Button>
             </Paper>
           )}
+
+          <Snackbar
+            open={snackbar.open}
+            autoHideDuration={3000}
+            onClose={() => setSnackbar({ ...snackbar, open: false })}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          >
+            <Alert
+              onClose={() => setSnackbar({ ...snackbar, open: false })}
+              severity={snackbar.severity}
+              sx={{ width: "100%" }}
+            >
+              {snackbar.message}
+            </Alert>
+          </Snackbar>
         </Container>
       </Box>
     </>

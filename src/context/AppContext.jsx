@@ -25,6 +25,25 @@ export const AppProvider = ({ children }) => {
     return JSON.parse(localStorage.getItem("invoices")) || [];
   });
 
+  const [companyProfile, setCompanyProfile] = useState({
+    name: "ChemLedger Solutions",
+    gst: "27ABCDE1234F1Z5",
+    phone: "+91 98765 43210",
+    email: "support@chemledger.com",
+    address: "Mumbai, Maharashtra, India",
+  });
+
+  useEffect(() => {
+    const storedProfile = localStorage.getItem("companyProfile");
+    if (storedProfile) {
+      setCompanyProfile(JSON.parse(storedProfile));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("companyProfile", JSON.stringify(companyProfile));
+  }, [companyProfile]);
+
   useEffect(() => {
     localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
   }, [isLoggedIn]);
@@ -60,6 +79,8 @@ export const AppProvider = ({ children }) => {
         setIsLoggedIn,
         lastInvoiceNumber,
         setLastInvoiceNumber,
+        companyProfile,
+        setCompanyProfile,
       }}
     >
       {children}

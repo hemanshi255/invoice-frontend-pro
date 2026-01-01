@@ -2,7 +2,15 @@
 
 import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { Container, TextField, Button, Typography, Paper } from "@mui/material";
+import {
+  Container,
+  TextField,
+  Button,
+  Typography,
+  Paper,
+  Alert,
+  Snackbar,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import { AppContext } from "../context/AppContext";
 
@@ -23,13 +31,22 @@ const Login = () => {
   const { setIsLoggedIn } = useContext(AppContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "error",
+  });
 
   const handleLogin = () => {
     if (username === "admin" && password === "admin123") {
       setIsLoggedIn(true);
       history.push("/dashboard");
     } else {
-      alert("Invalid credentials");
+      setSnackbar({
+        open: true,
+        message: "invalid Credential",
+        severity: "error",
+      });
     }
   };
   return (
@@ -113,6 +130,21 @@ const Login = () => {
           </Paper>
         </Container>
       </Box>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

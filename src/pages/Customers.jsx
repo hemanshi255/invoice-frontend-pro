@@ -10,6 +10,8 @@ import {
   Table,
   TableHead,
   TableRow,
+  Alert,
+  Snackbar,
   TableCell,
   TableBody,
   Paper,
@@ -49,6 +51,11 @@ const Customers = () => {
     phone: "",
     gst: "",
   });
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "error",
+  });
 
   const [form, setForm] = useState({
     name: "",
@@ -62,7 +69,11 @@ const Customers = () => {
 
   const addCustomer = () => {
     if (!form.name || !form.phone) {
-      alert("Name and phone are required");
+      setSnackbar({
+        open: true,
+        message: "Name and Phone required",
+        severity: "error",
+      });
       return;
     }
     setCustomers([...customers, form]);
@@ -295,6 +306,21 @@ const Customers = () => {
               </Button>
             </Paper>
           )}
+
+          <Snackbar
+            open={snackbar.open}
+            autoHideDuration={3000}
+            onClose={() => setSnackbar({ ...snackbar, open: false })}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          >
+            <Alert
+              onClose={() => setSnackbar({ ...snackbar, open: false })}
+              severity={snackbar.severity}
+              sx={{ width: "100%" }}
+            >
+              {snackbar.message}
+            </Alert>
+          </Snackbar>
         </Container>
       </Box>
     </>

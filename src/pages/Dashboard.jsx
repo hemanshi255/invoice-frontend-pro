@@ -71,6 +71,7 @@ const Dashboard = (props) => {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
     setIsLoggedIn(false);
     history.push("/login");
   };
@@ -232,18 +233,18 @@ const Dashboard = (props) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                {/* <MenuItem
+                <MenuItem
                   onClick={handleLogout}
                   sx={{
                     backgroundColor: "#030709",
-                    color: "#00e5ff",
+                    color: "#ff5252",
                     "&:hover": {
                       background: "#242525ff",
                     },
                   }}
                 >
                   Logout
-                </MenuItem> */}
+                </MenuItem>
 
                 <MenuItem
                   component={Link}

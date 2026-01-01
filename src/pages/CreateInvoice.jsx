@@ -14,6 +14,8 @@ import {
   TableHead,
   TableRow,
   TableCell,
+  Snackbar,
+  Alert,
   TableBody,
   Paper,
 } from "@mui/material";
@@ -65,6 +67,11 @@ const CreateInvoice = () => {
     batch: "",
     quantity: "",
   });
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "error",
+  });
 
   const handleItemChange = (e) => {
     setCurrentItem({ ...currentItem, [e.target.name]: e.target.value });
@@ -72,7 +79,11 @@ const CreateInvoice = () => {
 
   const addItem = () => {
     if (!currentItem.product || !currentItem.quantity) {
-      alert("Product and quantity required");
+      setSnackbar({
+        open: true,
+        message: "Product and quantity required",
+        severity: "error",
+      });
       return;
     }
 
@@ -81,16 +92,21 @@ const CreateInvoice = () => {
     const inventoryItem = inventory.find(
       (i) => i.product === currentItem.product && i.batch === currentItem.batch
     );
-
-    if (!inventoryItem) {
-      alert("Selected batch not available in inventory");
+    if (!currentItem.product || !currentItem.quantity) {
+      setSnackbar({
+        open: true,
+        message: "Product and quantity required",
+        severity: "error",
+      });
       return;
     }
 
-    if (currentItem.quantity > inventoryItem.quantity) {
-      alert(
-        `Insufficient stock. Available quantity: ${inventoryItem.quantity}`
-      );
+    if (!inventoryItem) {
+      setSnackbar({
+        open: true,
+        message: "Selected batch not available in inventory",
+        severity: "error",
+      });
       return;
     }
     const total = productData.price * currentItem.quantity;
@@ -110,7 +126,11 @@ const CreateInvoice = () => {
 
   const saveInvoice = () => {
     if (!customer || items.length === 0) {
-      alert("Select customer and add items");
+      setSnackbar({
+        open: true,
+        message: "Invoice created successfully!",
+        severity: "success",
+      });
       return;
     }
 
@@ -331,6 +351,21 @@ const CreateInvoice = () => {
           >
             Save Invoice
           </Button>
+
+          <Snackbar
+            open={snackbar.open}
+            autoHideDuration={3000}
+            onClose={() => setSnackbar({ ...snackbar, open: false })}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          >
+            <Alert
+              onClose={() => setSnackbar({ ...snackbar, open: false })}
+              severity={snackbar.severity}
+              sx={{ width: "100%" }}
+            >
+              {snackbar.message}
+            </Alert>
+          </Snackbar>
         </Container>
       </Box>
     </>

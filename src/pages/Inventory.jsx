@@ -15,6 +15,8 @@ import {
   TableHead,
   TableRow,
   TableCell,
+  Alert,
+  Snackbar,
   TableBody,
   Paper,
 } from "@mui/material";
@@ -54,13 +56,22 @@ const Inventory = () => {
     quantity: "",
     location: "",
   });
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "error",
+  });
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
   const addInventory = () => {
     if (!form.product || !form.batch || !form.quantity) {
-      alert("Product, batch and quantity required");
+      setSnackbar({
+        open: true,
+        message: "Product,Batch and Quantity required",
+        severity: "error",
+      });
       return;
     }
     setInventory([...inventory, { ...form, quantity: Number(form.quantity) }]);
@@ -192,6 +203,21 @@ const Inventory = () => {
               </TableBody>
             </Table>
           </Box>
+
+          <Snackbar
+            open={snackbar.open}
+            autoHideDuration={3000}
+            onClose={() => setSnackbar({ ...snackbar, open: false })}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          >
+            <Alert
+              onClose={() => setSnackbar({ ...snackbar, open: false })}
+              severity={snackbar.severity}
+              sx={{ width: "100%" }}
+            >
+              {snackbar.message}
+            </Alert>
+          </Snackbar>
         </Container>
       </Box>
     </>
