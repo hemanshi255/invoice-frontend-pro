@@ -22,6 +22,7 @@ const textFieldStyle = {
   "& .MuiInputBase-input": {
     color: "#a8a7a7ff",
     WebkitTextFillColor: "#a8a7a7ff",
+    textTransform: "capitalize",
   },
   "& .MuiInputLabel-root": {
     color: "#00e5ff",
@@ -110,6 +111,8 @@ const Customers = () => {
             Customers
           </Typography>
 
+          {/* ---customer-table--- */}
+
           <Paper
             sx={{
               padding: 2,
@@ -183,6 +186,8 @@ const Customers = () => {
             Customer List
           </Typography>
 
+          {/* ---customer-list-table--- */}
+
           <Box
             sx={{ overflowX: "auto", boxShadow: "0px 0px 10px 5px #00e5ff" }}
           >
@@ -203,8 +208,14 @@ const Customers = () => {
               <TableBody>
                 {customers.map((c, index) => (
                   <TableRow key={index}>
-                    <TableCell sx={{ color: "#fff" }}>{c.name}</TableCell>
-                    <TableCell sx={{ color: "#fff" }}>
+                    <TableCell
+                      sx={{ color: "#fff", textTransform: "capitalize" }}
+                    >
+                      {c.name}
+                    </TableCell>
+                    <TableCell
+                      sx={{ color: "#fff", textTransform: "capitalize" }}
+                    >
                       {c.organization}
                     </TableCell>
                     <TableCell sx={{ color: "#fff" }}>{c.phone}</TableCell>
@@ -237,6 +248,8 @@ const Customers = () => {
               </TableBody>
             </Table>
           </Box>
+
+          {/* ---edit-table--- */}
 
           {editIndex !== null && (
             <Paper
@@ -306,6 +319,8 @@ const Customers = () => {
               </Button>
             </Paper>
           )}
+
+          {/* ---snackbar--- */}
 
           <Snackbar
             open={snackbar.open}

@@ -11,6 +11,7 @@ import {
   Alert,
   Box,
 } from "@mui/material";
+import { useHistory } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 
 const textFieldStyle = {
@@ -32,9 +33,12 @@ const textFieldStyle = {
 };
 
 const Company = () => {
-  const { companyProfile, setCompanyProfile } = useContext(AppContext);
+  const { companyProfile, setCompanyProfile, setIsLoggedIn } =
+    useContext(AppContext);
   const [form, setForm] = useState(companyProfile);
   const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  const history = useHistory();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -48,6 +52,12 @@ const Company = () => {
   const handleCloseSnackbar = (event, reason) => {
     if (reason === "clickaway") return;
     setOpenSnackbar(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    setIsLoggedIn(false);
+    history.push("/login");
   };
 
   return (
@@ -139,22 +149,32 @@ const Company = () => {
               sx={textFieldStyle}
             />
 
-            <Button
-              variant="contained"
-              fullWidth
-              sx={{
-                mt: 3,
-                fontWeight: 600,
-                color: "#000",
-                background: "linear-gradient(90deg, #00e5ff, #1de9b6)",
-                "&:hover": {
-                  background: "linear-gradient(90deg, #1de9b6, #00e5ff)",
-                },
-              }}
-              onClick={handleSave}
-            >
-              Save Profile
-            </Button>
+            <Box sx={{ display: "flex", gap: "30px" }}>
+              <Button
+                variant="contained"
+                sx={{
+                  mt: 3,
+                  fontWeight: 600,
+                  color: "#000",
+                  background: "linear-gradient(90deg, #00e5ff, #1de9b6)",
+                  "&:hover": {
+                    background: "linear-gradient(90deg, #1de9b6, #00e5ff)",
+                  },
+                }}
+                onClick={handleSave}
+              >
+                Save Profile
+              </Button>
+
+              <Button
+                variant="contained"
+                onClick={handleLogout}
+                color="error"
+                sx={{ mt: 3, fontWeight: 600 }}
+              >
+                Logout
+              </Button>
+            </Box>
           </Paper>
 
           <Snackbar
@@ -168,7 +188,7 @@ const Company = () => {
               severity="success"
               sx={{ width: "100%" }}
             >
-              Company profile updated!
+              Company Profile Updated!
             </Alert>
           </Snackbar>
         </Container>

@@ -140,6 +140,8 @@ const Products = () => {
             Products
           </Typography>
 
+          {/* ---product-form--- */}
+
           <Paper
             sx={{
               padding: 2,
@@ -260,6 +262,8 @@ const Products = () => {
             Product List
           </Typography>
 
+          {/* ---product-list-table--- */}
+
           <Box
             sx={{ overflowX: "auto", boxShadow: "0px 0px 10px 5px #00e5ff" }}
           >
@@ -322,6 +326,8 @@ const Products = () => {
               </TableBody>
             </Table>
           </Box>
+
+          {/* ---edit-table--- */}
 
           {editIndex !== null && (
             <Paper
@@ -400,6 +406,8 @@ const Products = () => {
               </Button>
             </Paper>
           )}
+
+          {/* ---snackbar--- */}
 
           <Snackbar
             open={snackbar.open}

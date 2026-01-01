@@ -86,6 +86,8 @@ const Inventory = () => {
             Inventory
           </Typography>
 
+          {/* ---Inventory-form--- */}
+
           <Paper
             sx={{
               padding: 2,
@@ -178,6 +180,9 @@ const Inventory = () => {
           <Typography variant="h6" sx={{ color: "#fff", mb: 2 }}>
             Inventory List
           </Typography>
+
+          {/* ---Inventory-list-table--- */}
+
           <Box sx={{ boxShadow: "0px 0px 10px 5px #00e5ff", overflow: "auto" }}>
             <Table
               component={Paper}
@@ -194,7 +199,11 @@ const Inventory = () => {
               <TableBody>
                 {inventory.map((i, index) => (
                   <TableRow key={index}>
-                    <TableCell sx={{ color: "#fff" }}>{i.product}</TableCell>
+                    <TableCell
+                      sx={{ color: "#fff", textTransform: "capitalize" }}
+                    >
+                      {i.product}
+                    </TableCell>
                     <TableCell sx={{ color: "#fff" }}>{i.batch}</TableCell>
                     <TableCell sx={{ color: "#fff" }}>{i.expiry}</TableCell>
                     <TableCell sx={{ color: "#fff" }}>{i.quantity}</TableCell>
@@ -203,6 +212,8 @@ const Inventory = () => {
               </TableBody>
             </Table>
           </Box>
+
+          {/* ---snackbar--- */}
 
           <Snackbar
             open={snackbar.open}

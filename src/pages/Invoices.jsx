@@ -27,6 +27,8 @@ const Invoices = () => {
             Invoice History
           </Typography>
 
+          {/* ---invoice-history-table--- */}
+
           <Box sx={{ overflow: "auto", boxShadow: "0px 0px 10px 5px #1de9b6" }}>
             <Table
               component={Paper}
@@ -53,7 +55,11 @@ const Invoices = () => {
                     <TableCell sx={{ color: "#fff" }}>
                       {inv.invoiceNumber}
                     </TableCell>
-                    <TableCell sx={{ color: "#fff" }}>{inv.customer}</TableCell>
+                    <TableCell
+                      sx={{ color: "#fff", textTransform: "capitalize" }}
+                    >
+                      {inv.customer}
+                    </TableCell>
                     <TableCell sx={{ color: "#fff" }}>{inv.date}</TableCell>
                     <TableCell sx={{ color: "#fff" }}>
                       {inv.items.length}

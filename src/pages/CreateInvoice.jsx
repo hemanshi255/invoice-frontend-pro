@@ -81,7 +81,7 @@ const CreateInvoice = () => {
     if (!currentItem.product || !currentItem.quantity) {
       setSnackbar({
         open: true,
-        message: "Product and quantity required",
+        message: "Product and quantity are required",
         severity: "error",
       });
       return;
@@ -128,7 +128,7 @@ const CreateInvoice = () => {
     if (!customer || items.length === 0) {
       setSnackbar({
         open: true,
-        message: "Invoice created successfully!",
+        message: "Invoice Created Successfully!!",
         severity: "success",
       });
       return;
@@ -186,7 +186,8 @@ const CreateInvoice = () => {
             Create Invoice
           </Typography>
 
-          {/* CUSTOMER */}
+          {/* ---add-customer--- */}
+
           <Paper
             sx={{
               padding: 2,
@@ -219,7 +220,7 @@ const CreateInvoice = () => {
             </FormControl>
           </Paper>
 
-          {/* ADD ITEM */}
+          {/* ---add item--- */}
           <Paper
             sx={{
               padding: 2,
@@ -298,10 +299,11 @@ const CreateInvoice = () => {
             </Button>
           </Paper>
 
-          {/* ITEMS TABLE */}
           <Typography variant="h6" sx={{ color: "#fff", mb: 2 }}>
             Invoice Items
           </Typography>
+
+          {/* ---item-table--- */}
 
           <Box sx={{ overflow: "auto", boxShadow: "0px 0px 10px 5px #00e5ff" }}>
             <Table
@@ -320,7 +322,11 @@ const CreateInvoice = () => {
               <TableBody>
                 {items.map((i, index) => (
                   <TableRow key={index}>
-                    <TableCell sx={{ color: "#fff" }}>{i.product}</TableCell>
+                    <TableCell
+                      sx={{ color: "#fff", textTransform: "capitalize" }}
+                    >
+                      {i.product}
+                    </TableCell>
                     <TableCell sx={{ color: "#fff" }}>{i.batch}</TableCell>
                     <TableCell sx={{ color: "#fff" }}>{i.quantity}</TableCell>
                     <TableCell sx={{ color: "#fff" }}>{i.price}</TableCell>
@@ -351,6 +357,8 @@ const CreateInvoice = () => {
           >
             Save Invoice
           </Button>
+
+          {/* ---snackbar--- */}
 
           <Snackbar
             open={snackbar.open}

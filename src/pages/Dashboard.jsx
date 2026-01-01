@@ -52,7 +52,7 @@ const Dashboard = (props) => {
     background: "#030709",
     color: "#fff",
     cursor: "pointer",
-    boxShadow: " 0px 0px 10px 3px #1de9b6",
+    boxShadow: "0px 0px 10px 3px #1de9b6",
   };
 
   const handleDrawerClose = () => {
@@ -93,10 +93,17 @@ const Dashboard = (props) => {
     >
       <Toolbar />
 
+      {/* ---sidebarList--- */}
+
       <List>
         <ListItem
           disablePadding
-          sx={{ backgroundColor: "#030709", color: "#fff", mb: 1 }}
+          sx={{
+            backgroundColor: "#030709",
+            color: "#fff",
+            mb: 3,
+            boxShadow: "0px 0px 10px 2px #00e5ff",
+          }}
           onClick={() => setActivePage("products")}
         >
           <ListItemButton>
@@ -111,7 +118,12 @@ const Dashboard = (props) => {
 
         <ListItem
           disablePadding
-          sx={{ backgroundColor: "#030709", color: "#fff", mb: 1 }}
+          sx={{
+            backgroundColor: "#030709",
+            color: "#fff",
+            mb: 3,
+            boxShadow: "0px 0px 10px 2px #00e5ff",
+          }}
           onClick={() => setActivePage("inventory")}
         >
           <ListItemButton>
@@ -126,7 +138,12 @@ const Dashboard = (props) => {
 
         <ListItem
           disablePadding
-          sx={{ backgroundColor: "#030709", color: "#fff", mb: 1 }}
+          sx={{
+            backgroundColor: "#030709",
+            color: "#fff",
+            mb: 3,
+            boxShadow: "0px 0px 10px 2px #00e5ff",
+          }}
           onClick={() => setActivePage("customers")}
         >
           <ListItemButton>
@@ -135,13 +152,18 @@ const Dashboard = (props) => {
                 style={{ color: "#fff", fontSize: "20px", fontWeight: 600 }}
               />
             </ListItemIcon>
-            <ListItemText primary="Customer" />
+            <ListItemText primary="Customers" />
           </ListItemButton>
         </ListItem>
 
         <ListItem
           disablePadding
-          sx={{ backgroundColor: "#030709", color: "#fff", mb: 1 }}
+          sx={{
+            backgroundColor: "#030709",
+            color: "#fff",
+            mb: 3,
+            boxShadow: "0px 0px 10px 2px #00e5ff",
+          }}
           onClick={() => setActivePage("create-invoice")}
         >
           <ListItemButton>
@@ -156,7 +178,12 @@ const Dashboard = (props) => {
 
         <ListItem
           disablePadding
-          sx={{ backgroundColor: "#030709", color: "#fff", mb: 1 }}
+          sx={{
+            backgroundColor: "#030709",
+            color: "#fff",
+            mb: 3,
+            boxShadow: "0px 0px 10px 2px #00e5ff",
+          }}
           onClick={() => setActivePage("invoices")}
         >
           <ListItemButton>
@@ -178,6 +205,9 @@ const Dashboard = (props) => {
     <>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
+
+        {/* --header--- */}
+
         <AppBar
           position="fixed"
           sx={{
@@ -206,6 +236,8 @@ const Dashboard = (props) => {
             >
               Dashboard
             </Typography>
+
+            {/* ---Account & login--- */}
 
             <div>
               <IconButton
@@ -290,6 +322,7 @@ const Dashboard = (props) => {
           >
             {drawer}
           </Drawer>
+
           <Drawer
             variant="permanent"
             sx={{
@@ -313,6 +346,8 @@ const Dashboard = (props) => {
         >
           <Toolbar />
           <Box sx={{ background: "#2c5364", minHeight: "100vh" }}>
+            {/* ---counter-card--- */}
+
             <Box sx={{ px: 2, py: 3 }}>
               <Grid container spacing={2}>
                 <Grid size={{ xs: 12, sm: 6, md: 6, lg: 3 }}>
@@ -377,6 +412,8 @@ const Dashboard = (props) => {
                 </Grid>
               </Grid>
             </Box>
+
+            {/* ---activepage--- */}
 
             <Box sx={{ mt: 4 }}>
               {activePage === "products" && <Products />}
