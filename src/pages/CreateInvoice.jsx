@@ -92,19 +92,20 @@ const CreateInvoice = () => {
     const inventoryItem = inventory.find(
       (i) => i.product === currentItem.product && i.batch === currentItem.batch
     );
-    if (!currentItem.product || !currentItem.quantity) {
-      setSnackbar({
-        open: true,
-        message: "Product and quantity required",
-        severity: "error",
-      });
-      return;
-    }
 
     if (!inventoryItem) {
       setSnackbar({
         open: true,
         message: "Selected batch not available in inventory",
+        severity: "error",
+      });
+      return;
+    }
+
+    if (currentItem.quantity > inventoryItem.quantity) {
+      setSnackbar({
+        open: true,
+        message: `Insufficient stock. Available quantity: ${inventoryItem.quantity}`,
         severity: "error",
       });
       return;
