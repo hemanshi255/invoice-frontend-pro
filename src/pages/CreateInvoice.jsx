@@ -47,6 +47,11 @@ const textFieldStyle = {
   },
 };
 
+const glassBg = "rgba(255,255,255,0.04)";
+const glassBorder = "rgba(0,229,255,0.25)";
+const glowCyan = "0 0 22px rgba(0,229,255,0.45)";
+const glowTeal = "0 0 22px rgba(29,233,182,0.45)";
+
 const CreateInvoice = () => {
   const history = useHistory();
 
@@ -81,7 +86,7 @@ const CreateInvoice = () => {
     if (!currentItem.product || !currentItem.quantity) {
       setSnackbar({
         open: true,
-        message: "Product and quantity required",
+        message: "Product and quantity are required",
         severity: "error",
       });
       return;
@@ -129,7 +134,7 @@ const CreateInvoice = () => {
     if (!customer || items.length === 0) {
       setSnackbar({
         open: true,
-        message: "Invoice created successfully!",
+        message: "Invoice Created Successfully!!",
         severity: "success",
       });
       return;
@@ -181,25 +186,38 @@ const CreateInvoice = () => {
   const grandTotal = subTotal + gstAmount;
   return (
     <>
-      <Box sx={{ py: "60px", background: "#2c5364" }}>
+      <Box
+        sx={{
+          py: "60px",
+          background:
+            "radial-gradient(circle at top, rgba(0,229,255,0.08), transparent 40%), #0b1220",
+        }}
+      >
         <Container maxWidth="md">
           <Typography variant="h5" gutterBottom sx={{ color: "#fff", mb: 2 }}>
             Create Invoice
           </Typography>
 
-          {/* CUSTOMER */}
+          {/* ---add-customer--- */}
+
           <Paper
             sx={{
-              padding: 2,
-              marginBottom: 3,
-              backgroundColor: "#030709",
-              color: "#fff",
-              boxShadow: "0px 0px 10px 5px #1de9b6",
+              p: 3,
+              mb: 4,
+              background: glassBg,
+              backdropFilter: "blur(16px)",
+              borderRadius: "18px",
+              border: `1px solid ${glassBorder}`,
+              boxShadow: glowTeal,
             }}
           >
             <Typography
               variant="h6"
-              sx={{ fontFamily: "monospace", fontStyle: "italic" }}
+              sx={{
+                fontFamily: "monospace",
+                fontStyle: "italic",
+                color: "#fff",
+              }}
             >
               Customer
             </Typography>
@@ -220,19 +238,25 @@ const CreateInvoice = () => {
             </FormControl>
           </Paper>
 
-          {/* ADD ITEM */}
+          {/* ---add item--- */}
           <Paper
             sx={{
-              padding: 2,
-              marginBottom: 3,
-              backgroundColor: "#030709",
-              color: "#fff",
-              boxShadow: "0px 0px 10px 5px #1de9b6",
+              p: 3,
+              mb: 4,
+              background: glassBg,
+              backdropFilter: "blur(16px)",
+              borderRadius: "18px",
+              border: `1px solid ${glassBorder}`,
+              boxShadow: glowTeal,
             }}
           >
             <Typography
               variant="h6"
-              sx={{ fontFamily: "monospace", fontStyle: "italic" }}
+              sx={{
+                fontFamily: "monospace",
+                fontStyle: "italic",
+                color: "#fff",
+              }}
             >
               Add Item
             </Typography>
@@ -299,18 +323,33 @@ const CreateInvoice = () => {
             </Button>
           </Paper>
 
-          {/* ITEMS TABLE */}
           <Typography variant="h6" sx={{ color: "#fff", mb: 2 }}>
             Invoice Items
           </Typography>
 
-          <Box sx={{ overflow: "auto", boxShadow: "0px 0px 10px 5px #00e5ff" }}>
+          {/* ---item-table--- */}
+
+          <Box
+            sx={{
+              overflowX: "auto",
+              background: glassBg,
+              backdropFilter: "blur(16px)",
+              borderRadius: "18px",
+              border: `1px solid ${glassBorder}`,
+              boxShadow: glowCyan,
+            }}
+          >
             <Table
               component={Paper}
-              sx={{ backgroundColor: "#030709", color: "#fff" }}
+              sx={{ background: "transparent", color: "#fff" }}
             >
               <TableHead>
-                <TableRow>
+                <TableRow
+                  sx={{
+                    background: "rgba(0,229,255,0.06)",
+                    backdropFilter: "blur(12px)",
+                  }}
+                >
                   <TableCell sx={{ color: "#00e5ff" }}>Product</TableCell>
                   <TableCell sx={{ color: "#00e5ff" }}>Batch</TableCell>
                   <TableCell sx={{ color: "#00e5ff" }}>Qty</TableCell>
@@ -321,7 +360,11 @@ const CreateInvoice = () => {
               <TableBody>
                 {items.map((i, index) => (
                   <TableRow key={index}>
-                    <TableCell sx={{ color: "#fff" }}>{i.product}</TableCell>
+                    <TableCell
+                      sx={{ color: "#fff", textTransform: "capitalize" }}
+                    >
+                      {i.product}
+                    </TableCell>
                     <TableCell sx={{ color: "#fff" }}>{i.batch}</TableCell>
                     <TableCell sx={{ color: "#fff" }}>{i.quantity}</TableCell>
                     <TableCell sx={{ color: "#fff" }}>{i.price}</TableCell>
@@ -352,6 +395,8 @@ const CreateInvoice = () => {
           >
             Save Invoice
           </Button>
+
+          {/* ---snackbar--- */}
 
           <Snackbar
             open={snackbar.open}

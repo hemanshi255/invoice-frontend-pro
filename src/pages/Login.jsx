@@ -71,6 +71,8 @@ const Login = () => {
         }}
       >
         <Container maxWidth="sm">
+          {/* ---login-form--- */}
+
           <Paper
             sx={{
               p: 4,
@@ -130,6 +132,8 @@ const Login = () => {
           </Paper>
         </Container>
       </Box>
+
+      {/* --snackbar [invalid credential]-- */}
 
       <Snackbar
         open={snackbar.open}

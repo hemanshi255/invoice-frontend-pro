@@ -1,30 +1,61 @@
-import { Grid } from "@mui/material";
-import DashboardLayout from "../components/DashboardLayout";
-import StatCard from "../components/StatCard";
-import InventoryIcon from "@mui/icons-material/Inventory";
+// src/pages/Dashboard.jsx
 
-const Dashboard = () => (
-  <DashboardLayout>
-    <Grid container spacing={3}>
-      <Grid item xs={12} sm={6} md={3}>
-        <StatCard
-          title="Total Products"
-          value="120"
-          icon={<InventoryIcon />}
-          color="#00e5ff"
-        />
-      </Grid>
+import React, { useState } from "react";
+import { Box } from "@mui/material";
+import Topbar from "../components/layout/Topbar";
+import Sidebar from "../components/layout/Sidebar";
+import DashboardCards from "../components/dashboard/DashboardCards";
+import Products from "./Products";
+import Inventory from "./Inventory";
+import Customers from "./Customers";
+import CreateInvoice from "./CreateInvoice";
+import Invoices from "./Invoices";
+import dashboardTheme from "../styles/dashboardTheme";
 
-      <Grid item xs={12} sm={6} md={3}>
-        <StatCard
-          title="Inventory"
-          value="350"
-          icon={<InventoryIcon />}
-          color="#1de9b6"
-        />
-      </Grid>
-    </Grid>
-  </DashboardLayout>
-);
+const TOPBAR_HEIGHT = 72;
+
+const Dashboard = () => {
+  const [activePage, setActivePage] = useState("dashboard");
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        minHeight: "100vh",
+        background: dashboardTheme.colors.background,
+      }}
+    >
+      {/* SIDEBAR */}
+      <Sidebar
+        activePage={activePage}
+        setActivePage={setActivePage}
+        mobileOpen={mobileOpen}
+        setMobileOpen={setMobileOpen}
+      />
+
+      {/* MAIN CONTENT */}
+      <Box
+        sx={{
+          flexGrow: 1,
+          pt: `${TOPBAR_HEIGHT}px`,
+        }}
+      >
+        {/* TOPBAR */}
+        <Topbar onMenuClick={() => setMobileOpen(true)} />
+
+        {/* PAGE CONTENT */}
+        <Box sx={{ p: { xs: 4, sm: 4, md: 4 } }}>
+          {activePage === "dashboard" && <DashboardCards />}
+          {activePage === "products" && <Products />}
+          {activePage === "inventory" && <Inventory />}
+          {activePage === "customers" && <Customers />}
+          {activePage === "create-invoice" && <CreateInvoice />}
+          {activePage === "invoices" && <Invoices />}
+        </Box>
+      </Box>
+    </Box>
+  );
+};
 
 export default Dashboard;

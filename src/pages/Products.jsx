@@ -47,6 +47,11 @@ const textFieldStyle = {
   },
 };
 
+const glassBg = "rgba(255,255,255,0.04)";
+const glassBorder = "rgba(0,229,255,0.25)";
+const glowCyan = "0 0 22px rgba(0,229,255,0.45)";
+const glowTeal = "0 0 22px rgba(29,233,182,0.45)";
+
 const Products = () => {
   const { products, setProducts } = useContext(AppContext);
   const [editIndex, setEditIndex] = useState(null);
@@ -127,7 +132,13 @@ const Products = () => {
 
   return (
     <>
-      <Box sx={{ py: "60px", background: "#2c5364" }}>
+      <Box
+        sx={{
+          py: "60px",
+          background:
+            "radial-gradient(circle at top, rgba(0,229,255,0.08), transparent 40%), #0b1220",
+        }}
+      >
         <Container maxWidth="md">
           <Typography
             variant="h5"
@@ -140,18 +151,26 @@ const Products = () => {
             Products
           </Typography>
 
+          {/* ---product-form--- */}
+
           <Paper
             sx={{
-              padding: 2,
-              marginBottom: 3,
-              backgroundColor: "#030709",
-              color: "#fff",
-              boxShadow: "0px 0px 10px 5px #1de9b6",
+              p: 3,
+              mb: 4,
+              background: glassBg,
+              backdropFilter: "blur(16px)",
+              borderRadius: "18px",
+              border: `1px solid ${glassBorder}`,
+              boxShadow: glowTeal,
             }}
           >
             <Typography
               variant="h6"
-              sx={{ fontFamily: "monospace", fontStyle: "italic" }}
+              sx={{
+                fontFamily: "monospace",
+                fontStyle: "italic",
+                color: "#fff",
+              }}
             >
               Add Product
             </Typography>
@@ -260,18 +279,32 @@ const Products = () => {
             Product List
           </Typography>
 
+          {/* ---product-list-table--- */}
+
           <Box
-            sx={{ overflowX: "auto", boxShadow: "0px 0px 10px 5px #00e5ff" }}
+            sx={{
+              overflowX: "auto",
+              background: glassBg,
+              backdropFilter: "blur(16px)",
+              borderRadius: "18px",
+              border: `1px solid ${glassBorder}`,
+              boxShadow: glowCyan,
+            }}
           >
             <Table
               component={Paper}
               sx={{
-                backgroundColor: "#030709",
+                background: "transparent",
                 color: "#fff",
               }}
             >
               <TableHead>
-                <TableRow>
+                <TableRow
+                  sx={{
+                    background: "rgba(0,229,255,0.06)",
+                    backdropFilter: "blur(12px)",
+                  }}
+                >
                   <TableCell sx={{ color: "#00e5ff" }}>Name</TableCell>
                   <TableCell sx={{ color: "#00e5ff" }}>Category</TableCell>
                   <TableCell sx={{ color: "#00e5ff" }}>Price (₹)</TableCell>
@@ -301,7 +334,11 @@ const Products = () => {
                         color="primary"
                         size="small"
                         onClick={() => handleEdit(index)}
-                        sx={{ boxShadow: "0px 0px 10px 2px #495d8aff" }}
+                        sx={{
+                          borderColor: "#00e5ff",
+                          color: "#00e5ff",
+                          boxShadow: "0 0 12px rgba(0,229,255,0.45)",
+                        }}
                       >
                         EDIT
                       </Button>
@@ -312,7 +349,11 @@ const Products = () => {
                         color="error"
                         size="small"
                         onClick={() => handleDelete(index)}
-                        sx={{ boxShadow: "0px 0px 10px 2px #945f5fff" }}
+                        sx={{
+                          borderColor: "#ff5252",
+                          color: "#ff5252",
+                          boxShadow: "0 0 12px rgba(255,82,82,0.45)",
+                        }}
                       >
                         DELETE
                       </Button>
@@ -322,6 +363,8 @@ const Products = () => {
               </TableBody>
             </Table>
           </Box>
+
+          {/* ---edit-table--- */}
 
           {editIndex !== null && (
             <Paper
@@ -400,6 +443,8 @@ const Products = () => {
               </Button>
             </Paper>
           )}
+
+          {/* ---snackbar--- */}
 
           <Snackbar
             open={snackbar.open}

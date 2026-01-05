@@ -22,6 +22,7 @@ const textFieldStyle = {
   "& .MuiInputBase-input": {
     color: "#a8a7a7ff",
     WebkitTextFillColor: "#a8a7a7ff",
+    textTransform: "capitalize",
   },
   "& .MuiInputLabel-root": {
     color: "#00e5ff",
@@ -41,6 +42,11 @@ const textFieldStyle = {
     },
   },
 };
+
+const glassBg = "rgba(255,255,255,0.04)";
+const glassBorder = "rgba(0,229,255,0.25)";
+const glowCyan = "0 0 22px rgba(0,229,255,0.45)";
+const glowTeal = "0 0 22px rgba(29,233,182,0.45)";
 
 const Customers = () => {
   const { customers, setCustomers } = useContext(AppContext);
@@ -104,24 +110,39 @@ const Customers = () => {
 
   return (
     <>
-      <Box sx={{ py: "60px", background: "#2c5364", minHeight: "87vh" }}>
+      <Box
+        sx={{
+          py: "60px",
+          background:
+            "radial-gradient(circle at top, rgba(0,229,255,0.08), transparent 40%), #0b1220",
+          minHeight: "87vh",
+        }}
+      >
         <Container maxWidth="md">
           <Typography variant="h5" gutterBottom sx={{ color: "#fff", mb: 2 }}>
             Customers
           </Typography>
 
+          {/* ---customer-table--- */}
+
           <Paper
             sx={{
-              padding: 2,
-              marginBottom: 3,
-              backgroundColor: "#030709",
-              color: "#fff",
-              boxShadow: "0px 0px 10px 5px #1de9b6",
+              p: 3,
+              mb: 4,
+              background: glassBg,
+              backdropFilter: "blur(16px)",
+              borderRadius: "18px",
+              border: `1px solid ${glassBorder}`,
+              boxShadow: glowTeal,
             }}
           >
             <Typography
               variant="h6"
-              sx={{ fontFamily: "monospace", fontStyle: "italic" }}
+              sx={{
+                fontFamily: "monospace",
+                fontStyle: "italic",
+                color: "#fff",
+              }}
             >
               Add Customer
             </Typography>
@@ -183,15 +204,32 @@ const Customers = () => {
             Customer List
           </Typography>
 
+          {/* ---customer-list-table--- */}
+
           <Box
-            sx={{ overflowX: "auto", boxShadow: "0px 0px 10px 5px #00e5ff" }}
+            sx={{
+              overflowX: "auto",
+              background: glassBg,
+              backdropFilter: "blur(16px)",
+              borderRadius: "18px",
+              border: `1px solid ${glassBorder}`,
+              boxShadow: glowCyan,
+            }}
           >
             <Table
               component={Paper}
-              sx={{ backgroundColor: "#030709", color: "#fff" }}
+              sx={{
+                background: "transparent",
+                color: "#fff",
+              }}
             >
               <TableHead>
-                <TableRow>
+                <TableRow
+                  sx={{
+                    background: "rgba(0,229,255,0.06)",
+                    backdropFilter: "blur(12px)",
+                  }}
+                >
                   <TableCell sx={{ color: "#00e5ff" }}>Name</TableCell>
                   <TableCell sx={{ color: "#00e5ff" }}>Organization</TableCell>
                   <TableCell sx={{ color: "#00e5ff" }}>Phone</TableCell>
@@ -203,8 +241,14 @@ const Customers = () => {
               <TableBody>
                 {customers.map((c, index) => (
                   <TableRow key={index}>
-                    <TableCell sx={{ color: "#fff" }}>{c.name}</TableCell>
-                    <TableCell sx={{ color: "#fff" }}>
+                    <TableCell
+                      sx={{ color: "#fff", textTransform: "capitalize" }}
+                    >
+                      {c.name}
+                    </TableCell>
+                    <TableCell
+                      sx={{ color: "#fff", textTransform: "capitalize" }}
+                    >
                       {c.organization}
                     </TableCell>
                     <TableCell sx={{ color: "#fff" }}>{c.phone}</TableCell>
@@ -215,7 +259,11 @@ const Customers = () => {
                         color="primary"
                         size="small"
                         onClick={() => handleEdit(index)}
-                        sx={{ boxShadow: "0px 0px 10px 2px #495d8aff" }}
+                        sx={{
+                          borderColor: "#00e5ff",
+                          color: "#00e5ff",
+                          boxShadow: "0 0 12px rgba(0,229,255,0.45)",
+                        }}
                       >
                         EDIT
                       </Button>
@@ -227,7 +275,11 @@ const Customers = () => {
                         color="error"
                         size="small"
                         onClick={() => handleDelete(index)}
-                        sx={{ boxShadow: "0px 0px 10px 2px #945f5fff" }}
+                        sx={{
+                          borderColor: "#ff5252",
+                          color: "#ff5252",
+                          boxShadow: "0 0 12px rgba(255,82,82,0.45)",
+                        }}
                       >
                         DELETE
                       </Button>
@@ -237,6 +289,8 @@ const Customers = () => {
               </TableBody>
             </Table>
           </Box>
+
+          {/* ---edit-table--- */}
 
           {editIndex !== null && (
             <Paper
@@ -306,6 +360,8 @@ const Customers = () => {
               </Button>
             </Paper>
           )}
+
+          {/* ---snackbar--- */}
 
           <Snackbar
             open={snackbar.open}

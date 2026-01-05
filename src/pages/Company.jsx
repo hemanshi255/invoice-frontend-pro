@@ -1,4 +1,4 @@
-// ==company.jsx==
+// ==src/pages/company.jsx==
 
 import { useContext, useState } from "react";
 import {
@@ -11,7 +11,13 @@ import {
   Alert,
   Box,
 } from "@mui/material";
+import { useHistory } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
+
+const glassBg = "rgba(255,255,255,0.04)";
+const glassBorder = "rgba(0,229,255,0.25)";
+const glowCyan = "0 0 22px rgba(0,229,255,0.45)";
+const glowTeal = "0 0 22px rgba(29,233,182,0.45)";
 
 const textFieldStyle = {
   "& .MuiInputBase-input": {
@@ -32,9 +38,12 @@ const textFieldStyle = {
 };
 
 const Company = () => {
-  const { companyProfile, setCompanyProfile } = useContext(AppContext);
+  const { companyProfile, setCompanyProfile, setIsLoggedIn } =
+    useContext(AppContext);
   const [form, setForm] = useState(companyProfile);
   const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  const history = useHistory();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -50,9 +59,22 @@ const Company = () => {
     setOpenSnackbar(false);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    setIsLoggedIn(false);
+    history.push("/login");
+  };
+
   return (
     <>
-      <Box sx={{ py: "60px", background: "#2c5364", minHeight: "87vh" }}>
+      <Box
+        sx={{
+          py: "60px",
+          background:
+            "radial-gradient(circle at top, rgba(0,229,255,0.08), transparent 40%), #0b1220",
+          minHeight: "87vh",
+        }}
+      >
         <Container maxWidth="sm">
           {/* Company Title */}
           <Typography
@@ -71,16 +93,24 @@ const Company = () => {
           {/* Profile Form */}
           <Paper
             sx={{
-              p: 4,
-              backgroundColor: "#030709",
-              color: "#fff",
-              boxShadow: "0px 0px 15px 5px #1de9b6",
+              p: 3,
+              mb: 4,
+              background: glassBg,
+              backdropFilter: "blur(16px)",
+              borderRadius: "18px",
+              border: `1px solid ${glassBorder}`,
+              boxShadow: glowTeal,
             }}
           >
             <Typography
               variant="h5"
               gutterBottom
-              sx={{ fontFamily: "monospace", fontStyle: "italic", mb: 2 }}
+              sx={{
+                fontFamily: "monospace",
+                fontStyle: "italic",
+                mb: 2,
+                color: "#fff",
+              }}
             >
               Company Profile
             </Typography>
@@ -139,22 +169,32 @@ const Company = () => {
               sx={textFieldStyle}
             />
 
-            <Button
-              variant="contained"
-              fullWidth
-              sx={{
-                mt: 3,
-                fontWeight: 600,
-                color: "#000",
-                background: "linear-gradient(90deg, #00e5ff, #1de9b6)",
-                "&:hover": {
-                  background: "linear-gradient(90deg, #1de9b6, #00e5ff)",
-                },
-              }}
-              onClick={handleSave}
-            >
-              Save Profile
-            </Button>
+            <Box sx={{ display: "flex", gap: "30px" }}>
+              <Button
+                variant="contained"
+                sx={{
+                  mt: 3,
+                  fontWeight: 600,
+                  color: "#000",
+                  background: "linear-gradient(90deg, #00e5ff, #1de9b6)",
+                  "&:hover": {
+                    background: "linear-gradient(90deg, #1de9b6, #00e5ff)",
+                  },
+                }}
+                onClick={handleSave}
+              >
+                Save Profile
+              </Button>
+
+              <Button
+                variant="contained"
+                onClick={handleLogout}
+                color="error"
+                sx={{ mt: 3, fontWeight: 600 }}
+              >
+                Logout
+              </Button>
+            </Box>
           </Paper>
 
           <Snackbar
@@ -168,7 +208,7 @@ const Company = () => {
               severity="success"
               sx={{ width: "100%" }}
             >
-              Company profile updated!
+              Company Profile Updated!
             </Alert>
           </Snackbar>
         </Container>
