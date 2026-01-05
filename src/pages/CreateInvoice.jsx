@@ -92,10 +92,10 @@ const CreateInvoice = () => {
     const inventoryItem = inventory.find(
       (i) => i.product === currentItem.product && i.batch === currentItem.batch
     );
-    if (!currentItem.product || !currentItem.quantity) {
+    if (!currentItem.quantity > 0) {
       setSnackbar({
         open: true,
-        message: "Product and quantity required",
+        message: "Out of stock",
         severity: "error",
       });
       return;

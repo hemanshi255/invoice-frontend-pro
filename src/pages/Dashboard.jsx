@@ -33,6 +33,18 @@ import Menu from "@mui/material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
+const COLORS = {
+  bg: "#050a0e",
+  sidebar: "#050a0e",
+  header: "rgba(5,10,14,0.85)",
+  panel: "#0b141b",
+  card: "#060b10",
+  neon: "#21f3c6",
+  neonSoft: "rgba(33,243,198,0.35)",
+  text: "#e8fefe",
+  muted: "#7aa5a0",
+};
+
 const drawerWidth = 240;
 
 const Dashboard = (props) => {
@@ -47,12 +59,13 @@ const Dashboard = (props) => {
   const history = useHistory();
 
   const cardStyle = {
-    padding: 3,
+    p: 3,
     textAlign: "center",
-    background: "#030709",
-    color: "#fff",
-    cursor: "pointer",
-    boxShadow: "0px 0px 10px 3px #1de9b6",
+    background: COLORS.card,
+    color: COLORS.text,
+    borderRadius: "18px",
+    border: `1px solid ${COLORS.neonSoft}`,
+    boxShadow: `0 0 25px ${COLORS.neonSoft}`,
   };
 
   const handleDrawerClose = () => {
@@ -85,122 +98,69 @@ const Dashboard = (props) => {
   };
 
   const drawer = (
-    <div
-      style={{
-        background: "linear-gradient(360deg, #0f2027, #203a43, #2c5364)",
-        minHeight: "100vh",
+    <Box
+      sx={{
+        minHeight: "100%",
+        background: `linear-gradient(180deg, ${COLORS.sidebar}, #020608)`,
+        px: 1,
       }}
     >
       <Toolbar />
 
-      {/* ---sidebarList--- */}
-
       <List>
-        <ListItem
-          disablePadding
-          sx={{
-            backgroundColor: "#030709",
-            color: "#fff",
-            mb: 3,
-            boxShadow: "0px 0px 10px 2px #00e5ff",
-          }}
-          onClick={() => setActivePage("products")}
-        >
-          <ListItemButton>
-            <ListItemIcon>
-              <AiOutlineProduct
-                style={{ color: "#fff", fontSize: "20px", fontWeight: 600 }}
+        {[
+          { key: "products", label: "Products", icon: <AiOutlineProduct /> },
+          {
+            key: "inventory",
+            label: "Inventory",
+            icon: <MdOutlineInventory />,
+          },
+          { key: "customers", label: "Customer", icon: <IoPersonAddOutline /> },
+          {
+            key: "create-invoice",
+            label: "Create Invoice",
+            icon: <LiaFileInvoiceDollarSolid />,
+          },
+          { key: "invoices", label: "Invoices", icon: <MdChecklist /> },
+        ].map((item) => (
+          <ListItem
+            key={item.key}
+            disablePadding
+            onClick={() => setActivePage(item.key)}
+            sx={{
+              mb: 1,
+              borderRadius: "14px",
+              background:
+                activePage === item.key
+                  ? `linear-gradient(90deg, ${COLORS.neonSoft}, transparent)`
+                  : "transparent",
+              border:
+                activePage === item.key
+                  ? `1px solid ${COLORS.neon}`
+                  : "1px solid transparent",
+            }}
+          >
+            <ListItemButton sx={{ borderRadius: "14px" }}>
+              <ListItemIcon sx={{ color: COLORS.neon, fontSize: "22px" }}>
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText
+                primary={item.label}
+                primaryTypographyProps={{
+                  color: COLORS.text,
+                  fontWeight: 500,
+                }}
               />
-            </ListItemIcon>
-            <ListItemText primary="Products" />
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem
-          disablePadding
-          sx={{
-            backgroundColor: "#030709",
-            color: "#fff",
-            mb: 3,
-            boxShadow: "0px 0px 10px 2px #00e5ff",
-          }}
-          onClick={() => setActivePage("inventory")}
-        >
-          <ListItemButton>
-            <ListItemIcon>
-              <MdOutlineInventory
-                style={{ color: "#fff", fontSize: "20px", fontWeight: 600 }}
-              />
-            </ListItemIcon>
-            <ListItemText primary="Inventory" />
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem
-          disablePadding
-          sx={{
-            backgroundColor: "#030709",
-            color: "#fff",
-            mb: 3,
-            boxShadow: "0px 0px 10px 2px #00e5ff",
-          }}
-          onClick={() => setActivePage("customers")}
-        >
-          <ListItemButton>
-            <ListItemIcon>
-              <IoPersonAddOutline
-                style={{ color: "#fff", fontSize: "20px", fontWeight: 600 }}
-              />
-            </ListItemIcon>
-            <ListItemText primary="Customers" />
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem
-          disablePadding
-          sx={{
-            backgroundColor: "#030709",
-            color: "#fff",
-            mb: 3,
-            boxShadow: "0px 0px 10px 2px #00e5ff",
-          }}
-          onClick={() => setActivePage("create-invoice")}
-        >
-          <ListItemButton>
-            <ListItemIcon>
-              <LiaFileInvoiceDollarSolid
-                style={{ color: "#fff", fontSize: "20px", fontWeight: 600 }}
-              />
-            </ListItemIcon>
-            <ListItemText primary="Create Invoice" />
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem
-          disablePadding
-          sx={{
-            backgroundColor: "#030709",
-            color: "#fff",
-            mb: 3,
-            boxShadow: "0px 0px 10px 2px #00e5ff",
-          }}
-          onClick={() => setActivePage("invoices")}
-        >
-          <ListItemButton>
-            <ListItemIcon>
-              <MdChecklist
-                style={{ color: "#fff", fontSize: "20px", fontWeight: 600 }}
-              />
-            </ListItemIcon>
-            <ListItemText primary="Invoices" />
-          </ListItemButton>
-        </ListItem>
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
-    </div>
+    </Box>
   );
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
+
   return (
     <>
       <Box sx={{ display: "flex" }}>
@@ -211,10 +171,10 @@ const Dashboard = (props) => {
         <AppBar
           position="fixed"
           sx={{
-            width: { sm: `calc(100% - ${drawerWidth}px)` },
-            ml: { sm: `${drawerWidth}px` },
-            background: "linear-gradient(90deg, #0f2027, #203a43, #2c5364)",
-            borderBottom: "1px solid rgba(255,255,255,0.08)",
+            background: COLORS.header,
+            backdropFilter: "blur(10px)",
+            borderBottom: `1px solid ${COLORS.neonSoft}`,
+            boxShadow: "none",
           }}
         >
           <Toolbar>
@@ -345,7 +305,7 @@ const Dashboard = (props) => {
           }}
         >
           <Toolbar />
-          <Box sx={{ background: "#2c5364", minHeight: "100vh" }}>
+          <Box sx={{ background: COLORS.bg, minHeight: "100vh" }}>
             {/* ---counter-card--- */}
 
             <Box sx={{ px: 2, py: 3 }}>
@@ -355,9 +315,8 @@ const Dashboard = (props) => {
                     <Typography>
                       <AiOutlineProduct
                         style={{
-                          color: "#fff",
-                          fontSize: "20px",
-                          fontWeight: 600,
+                          color: COLORS.neon,
+                          fontSize: "22px",
                         }}
                       />
                     </Typography>
@@ -370,9 +329,8 @@ const Dashboard = (props) => {
                     <Typography>
                       <MdOutlineInventory
                         style={{
-                          color: "#fff",
-                          fontSize: "20px",
-                          fontWeight: 600,
+                          color: COLORS.neon,
+                          fontSize: "22px",
                         }}
                       />
                     </Typography>
@@ -385,9 +343,8 @@ const Dashboard = (props) => {
                     <Typography>
                       <IoPersonAddOutline
                         style={{
-                          color: "#fff",
-                          fontSize: "20px",
-                          fontWeight: 600,
+                          color: COLORS.neon,
+                          fontSize: "22px",
                         }}
                       />
                     </Typography>
@@ -400,9 +357,8 @@ const Dashboard = (props) => {
                     <Typography>
                       <LiaFileInvoiceDollarSolid
                         style={{
-                          color: "#fff",
-                          fontSize: "20px",
-                          fontWeight: 600,
+                          color: COLORS.neon,
+                          fontSize: "22px",
                         }}
                       />
                     </Typography>
