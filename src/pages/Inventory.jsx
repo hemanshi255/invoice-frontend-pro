@@ -1,4 +1,4 @@
-// ==Inventory.jsx===
+// ==src/pages/Inventory.jsx===
 
 import { useContext, useState } from "react";
 import { AppContext } from "../context/AppContext";
@@ -47,6 +47,11 @@ const textFieldStyle = {
   },
 };
 
+const glassBg = "rgba(255,255,255,0.04)";
+const glassBorder = "rgba(0,229,255,0.25)";
+const glowCyan = "0 0 22px rgba(0,229,255,0.45)";
+const glowTeal = "0 0 22px rgba(29,233,182,0.45)";
+
 const Inventory = () => {
   const { inventory, setInventory, products } = useContext(AppContext);
   const [form, setForm] = useState({
@@ -80,7 +85,14 @@ const Inventory = () => {
 
   return (
     <>
-      <Box sx={{ py: "60px", background: "#2c5364", minHeight: "87vh" }}>
+      <Box
+        sx={{
+          py: "60px",
+          background:
+            "radial-gradient(circle at top, rgba(0,229,255,0.08), transparent 40%), #0b1220",
+          minHeight: "87vh",
+        }}
+      >
         <Container maxWidth="md">
           <Typography variant="h5" gutterBottom sx={{ color: "#fff", mb: 2 }}>
             Inventory
@@ -90,16 +102,22 @@ const Inventory = () => {
 
           <Paper
             sx={{
-              padding: 2,
-              marginBottom: 3,
-              backgroundColor: "#030709",
-              color: "#fff",
-              boxShadow: "0px 0px 10px 5px #1de9b6",
+              p: 3,
+              mb: 4,
+              background: glassBg,
+              backdropFilter: "blur(16px)",
+              borderRadius: "18px",
+              border: `1px solid ${glassBorder}`,
+              boxShadow: glowTeal,
             }}
           >
             <Typography
               variant="h6"
-              sx={{ fontFamily: "monospace", fontStyle: "italic" }}
+              sx={{
+                fontFamily: "monospace",
+                fontStyle: "italic",
+                color: "#fff",
+              }}
             >
               Add Inventory
             </Typography>
@@ -183,13 +201,27 @@ const Inventory = () => {
 
           {/* ---Inventory-list-table--- */}
 
-          <Box sx={{ boxShadow: "0px 0px 10px 5px #00e5ff", overflow: "auto" }}>
+          <Box
+            sx={{
+              overflowX: "auto",
+              background: glassBg,
+              backdropFilter: "blur(16px)",
+              borderRadius: "18px",
+              border: `1px solid ${glassBorder}`,
+              boxShadow: glowCyan,
+            }}
+          >
             <Table
               component={Paper}
-              sx={{ backgroundColor: "#030709", color: "#fff" }}
+              sx={{ background: "transparent", color: "#fff" }}
             >
               <TableHead>
-                <TableRow>
+                <TableRow
+                  sx={{
+                    background: "rgba(0,229,255,0.06)",
+                    backdropFilter: "blur(12px)",
+                  }}
+                >
                   <TableCell sx={{ color: "#00e5ff" }}>Product</TableCell>
                   <TableCell sx={{ color: "#00e5ff" }}>Batch</TableCell>
                   <TableCell sx={{ color: "#00e5ff" }}>Expiry</TableCell>

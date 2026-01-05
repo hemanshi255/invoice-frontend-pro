@@ -1,4 +1,4 @@
-// ===createInvoice.jsx===
+// ===src/pages/createInvoice.jsx===
 
 import { useState, useContext } from "react";
 import {
@@ -47,6 +47,11 @@ const textFieldStyle = {
   },
 };
 
+const glassBg = "rgba(255,255,255,0.04)";
+const glassBorder = "rgba(0,229,255,0.25)";
+const glowCyan = "0 0 22px rgba(0,229,255,0.45)";
+const glowTeal = "0 0 22px rgba(29,233,182,0.45)";
+
 const CreateInvoice = () => {
   const history = useHistory();
 
@@ -92,19 +97,20 @@ const CreateInvoice = () => {
     const inventoryItem = inventory.find(
       (i) => i.product === currentItem.product && i.batch === currentItem.batch
     );
-    if (!currentItem.quantity > 0) {
-      setSnackbar({
-        open: true,
-        message: "Out of stock",
-        severity: "error",
-      });
-      return;
-    }
 
     if (!inventoryItem) {
       setSnackbar({
         open: true,
         message: "Selected batch not available in inventory",
+        severity: "error",
+      });
+      return;
+    }
+
+    if (currentItem.quantity > inventoryItem.quantity) {
+      setSnackbar({
+        open: true,
+        message: `Insufficient stock. Available quantity: ${inventoryItem.quantity}`,
         severity: "error",
       });
       return;
@@ -180,7 +186,13 @@ const CreateInvoice = () => {
   const grandTotal = subTotal + gstAmount;
   return (
     <>
-      <Box sx={{ py: "60px", background: "#2c5364" }}>
+      <Box
+        sx={{
+          py: "60px",
+          background:
+            "radial-gradient(circle at top, rgba(0,229,255,0.08), transparent 40%), #0b1220",
+        }}
+      >
         <Container maxWidth="md">
           <Typography variant="h5" gutterBottom sx={{ color: "#fff", mb: 2 }}>
             Create Invoice
@@ -190,16 +202,22 @@ const CreateInvoice = () => {
 
           <Paper
             sx={{
-              padding: 2,
-              marginBottom: 3,
-              backgroundColor: "#030709",
-              color: "#fff",
-              boxShadow: "0px 0px 10px 5px #1de9b6",
+              p: 3,
+              mb: 4,
+              background: glassBg,
+              backdropFilter: "blur(16px)",
+              borderRadius: "18px",
+              border: `1px solid ${glassBorder}`,
+              boxShadow: glowTeal,
             }}
           >
             <Typography
               variant="h6"
-              sx={{ fontFamily: "monospace", fontStyle: "italic" }}
+              sx={{
+                fontFamily: "monospace",
+                fontStyle: "italic",
+                color: "#fff",
+              }}
             >
               Customer
             </Typography>
@@ -223,16 +241,22 @@ const CreateInvoice = () => {
           {/* ---add item--- */}
           <Paper
             sx={{
-              padding: 2,
-              marginBottom: 3,
-              backgroundColor: "#030709",
-              color: "#fff",
-              boxShadow: "0px 0px 10px 5px #1de9b6",
+              p: 3,
+              mb: 4,
+              background: glassBg,
+              backdropFilter: "blur(16px)",
+              borderRadius: "18px",
+              border: `1px solid ${glassBorder}`,
+              boxShadow: glowTeal,
             }}
           >
             <Typography
               variant="h6"
-              sx={{ fontFamily: "monospace", fontStyle: "italic" }}
+              sx={{
+                fontFamily: "monospace",
+                fontStyle: "italic",
+                color: "#fff",
+              }}
             >
               Add Item
             </Typography>
@@ -305,13 +329,27 @@ const CreateInvoice = () => {
 
           {/* ---item-table--- */}
 
-          <Box sx={{ overflow: "auto", boxShadow: "0px 0px 10px 5px #00e5ff" }}>
+          <Box
+            sx={{
+              overflowX: "auto",
+              background: glassBg,
+              backdropFilter: "blur(16px)",
+              borderRadius: "18px",
+              border: `1px solid ${glassBorder}`,
+              boxShadow: glowCyan,
+            }}
+          >
             <Table
               component={Paper}
-              sx={{ backgroundColor: "#030709", color: "#fff" }}
+              sx={{ background: "transparent", color: "#fff" }}
             >
               <TableHead>
-                <TableRow>
+                <TableRow
+                  sx={{
+                    background: "rgba(0,229,255,0.06)",
+                    backdropFilter: "blur(12px)",
+                  }}
+                >
                   <TableCell sx={{ color: "#00e5ff" }}>Product</TableCell>
                   <TableCell sx={{ color: "#00e5ff" }}>Batch</TableCell>
                   <TableCell sx={{ color: "#00e5ff" }}>Qty</TableCell>

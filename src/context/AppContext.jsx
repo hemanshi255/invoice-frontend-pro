@@ -1,4 +1,4 @@
-// ==AppContext.jsx===
+// ==src/context/AppContext.jsx===
 
 import { createContext, useState, useEffect } from "react";
 

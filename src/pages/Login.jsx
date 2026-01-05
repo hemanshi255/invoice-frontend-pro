@@ -1,4 +1,4 @@
-// ==Login.jsx===
+// ==src/pages/Login.jsx===
 
 import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
@@ -54,7 +54,8 @@ const Login = () => {
       <Box
         sx={{
           py: 10,
-          background: "#2c5364",
+          background:
+            "radial-gradient(circle at top, rgba(0,229,255,0.08), transparent 40%), #0b1220",
           minHeight: "82vh",
           display: "flex",
           alignItems: "center",
@@ -85,7 +86,7 @@ const Login = () => {
                   transform: "scale(1)",
                 },
                 "50%": {
-                  transform: "scale(1.03)",
+                  transform: "scale(1.05)",
                 },
                 "100%": {
                   transform: "scale(1)",

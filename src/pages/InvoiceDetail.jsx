@@ -1,4 +1,4 @@
-// ==InvoixeDetail.jsx===
+// ==src/pages/InvoixeDetail.jsx===
 
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
@@ -16,6 +16,11 @@ import {
   Box,
 } from "@mui/material";
 import Stack from "@mui/material/Stack";
+
+const glassBg = "rgba(255,255,255,0.04)";
+const glassBorder = "rgba(0,229,255,0.25)";
+const glowCyan = "0 0 22px rgba(0,229,255,0.45)";
+const glowTeal = "0 0 22px rgba(29,233,182,0.45)";
 
 const InvoiceDetail = () => {
   const { id } = useParams();
@@ -41,7 +46,14 @@ const InvoiceDetail = () => {
 
   return (
     <>
-      <Box sx={{ py: "60px", background: "#2c5364", minHeight: "87vh" }}>
+      <Box
+        sx={{
+          py: "60px",
+          background:
+            "radial-gradient(circle at top, rgba(0,229,255,0.08), transparent 40%), #0b1220",
+          minHeight: "87vh",
+        }}
+      >
         <Container maxWidth="md">
           <Typography variant="h5" gutterBottom sx={{ color: "#fff", mb: 2 }}>
             Invoice Details
@@ -49,11 +61,14 @@ const InvoiceDetail = () => {
 
           <Paper
             sx={{
-              padding: 2,
-              marginBottom: 4,
-              backgroundColor: "#030709",
+              p: 3,
+              mb: 4,
+              background: glassBg,
+              backdropFilter: "blur(16px)",
+              borderRadius: "18px",
+              border: `1px solid ${glassBorder}`,
+              boxShadow: glowTeal,
               color: "#fff",
-              boxShadow: "0px 0px 10px 5px #1de9b6",
             }}
           >
             <Stack spacing={3}>
@@ -80,7 +95,12 @@ const InvoiceDetail = () => {
                 >
                   Customer Details
                 </Typography>
-                <Divider sx={{ marginY: 1, backgroundColor: "#fff" }} />
+                <Divider
+                  sx={{
+                    marginY: 1,
+                    border: `1px solid ${glassBorder}`,
+                  }}
+                />
                 <Typography
                   sx={{ mb: 0.5, mt: 1.5, textTransform: "capitalize" }}
                 >
@@ -111,7 +131,9 @@ const InvoiceDetail = () => {
                 >
                   Invoice Items
                 </Typography>
-                <Divider sx={{ marginY: 1, backgroundColor: "#fff" }} />
+                <Divider
+                  sx={{ marginY: 1, border: `1px solid ${glassBorder}` }}
+                />
 
                 <Box sx={{ overflowX: "auto" }}>
                   <Table>
@@ -196,7 +218,9 @@ const InvoiceDetail = () => {
                 >
                   Safety Notes
                 </Typography>
-                <Divider sx={{ marginY: 1, backgroundColor: "#fff" }} />
+                <Divider
+                  sx={{ marginY: 1, border: `1px solid ${glassBorder}` }}
+                />
                 {invoice.items.map((item, index) => {
                   const product = getProductDetails(item.product);
                   return (
